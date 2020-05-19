@@ -1,0 +1,72 @@
+module extrusionVertical(x = 20, y = 20, l)
+{
+    difference()
+    {
+        cube([x, y, l]);
+
+        translate([x-10 - 5/2, -.1, -.1])
+            cube([5, 2, l+.2]);
+
+        translate([x-10 - 5/2, y - 2, -.1])
+            cube([5, 2.1, l+.2]);
+
+        translate([x - 3, 10 - 5/2, -.1])
+            cube([3.1, 5, l+.2]);
+
+        translate([-0.1, 10-5/2, -.1])
+            cube([3.1, 5, l+.2]);
+    }
+}
+
+module extrusionHorizontalY(x = 20, y = 20, l)
+{
+    difference()
+    {
+        cube([x, l, y]);
+
+        translate([x-10 - 5/2, .1, -.1])
+            cube([5, l + .2, 2]);
+
+        translate([x-10 - 5/2, -.1, y-2])
+            cube([5, l + .2, 2.1]);
+
+        translate([-.1, -.1, 10 - 5/2])
+            cube([2.1, l + .2, 5]);
+        translate([-.1, -.1, y - 10 - 5/2])
+            cube([2.1, l + .2, 5]);
+
+        translate([x - 3, -1, 10 - 5/2])
+            cube([3.1, l + .2, 5]);
+        translate([x - 3, -1, y - 10 - 5/2])
+            cube([3.1, l + .2, 5]);
+    }
+}
+
+module extrusionHorizontalX(x = 20, y = 20, l)
+{
+    difference()
+    {
+        cube([l, x, y]);
+
+        translate([-.1,x-10 - 5/2, -.1])
+            cube([l + .2, 5, 2]);
+
+        translate([-.1, x-10 - 5/2, y-2])
+            cube([l + .2, 5, 2.1]);
+
+        translate([-.1, -.1, 10 - 5/2])
+            cube([l + .2, 2.1, 5]);
+        translate([-.1, -.1, y - 10 - 5/2])
+            cube([l + .2, 2.1, 5]);
+
+        translate([-.1, x - 3, 10 - 5/2])
+             cube([l + .2, 3.1, 5]);
+        translate([-.1, x - 3, y - 10 - 5/2])
+             cube([l + .2, 3.1, 5]);
+    }
+}
+
+module tenMMBar(l)
+{
+    cylinder(d = 10, h = l, $fn = 100);
+}
