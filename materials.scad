@@ -70,3 +70,20 @@ module tenMMBar(l)
 {
     cylinder(d = 10, h = l, $fn = 100);
 }
+
+
+
+module bearings12mm()
+{
+    difference() {
+        union() {
+            polyhole(d = 15, h = 1.5);
+            polyhole(d = 12, h = 10);
+            translate([0,0,8.5])
+                polyhole(d = 15, h = 1.5);
+        }
+        translate([0, 0, -.1])
+            polyhole(d = 4, h = 10.2);
+    }
+
+}
