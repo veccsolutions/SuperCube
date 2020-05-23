@@ -12,14 +12,14 @@ module zGantryBracketClampBase()
         translate([zGantryBracketX, zGantryBracketBaseWidth / 2, -.1])
             lmu10();
 
-        translate([zGantryBracketX - 6, -.1, 10 - 6/2])
+        translate([zGantryBracketX - 8, -.1, 10 - 6/2])
             cube([3, 10, 6]);
 
         translate([zGantryBracketX - 10, 5, 10])
             rotate([0, 90, 0])
             polyhole(d = 3, h = 10.1);
 
-        translate([zGantryBracketX - 6, zGantryBracketBaseWidth - 10, 10 - 6 / 2])
+        translate([zGantryBracketX - 8, zGantryBracketBaseWidth - 10, 10 - 6 / 2])
             cube([3, 10.1, 6]);
             
         translate([zGantryBracketX - 10, zGantryBracketBaseWidth - 5, 10])

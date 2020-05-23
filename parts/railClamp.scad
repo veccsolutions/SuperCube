@@ -1,6 +1,6 @@
 // this is where the 10mm rods go into to be clamped down
 
-module zRailClamp(l = 20)
+module railClamp(l = 20, d = 10)
 {
     difference(){        
         union()
@@ -26,14 +26,14 @@ module zRailClamp(l = 20)
                 polyhole(d = 3.5, h = 100);
 
         //screw insets
-        translate([-8, 16, (5 /2)])
-            cube([5, 6, 5]);
-        translate([-8, 16, 15 - (5 /2)])
-            cube([5, 6, 5]);
+        translate([-8, 16, 2])
+            cube([5, 6, 6]);
+        translate([-8, 16, 15 - 3])
+            cube([5, 6, 6]);
 
-        translate([3, 16, (5 /2)])
-            cube([5, 6, 5]);
-        translate([3, 16, 15 - (5 /2)])
-            cube([5, 6, 5]);
+        translate([3, 16, 2])
+            cube([5, 6, 6]);
+        translate([3, 16, 15 - 3])
+            cube([5, 6, 6]);
     }
 }

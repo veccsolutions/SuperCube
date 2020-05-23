@@ -10,7 +10,7 @@ module bedBracket()
         cube([bedBracketWidth, bedBracketThickness, bedBracketHeight]);
         translate([bedBracketThickness, -.1, 10])
             rotate([-90, 0, 0])
-            polyhole(d = 5, h = bedBracketThickness+.2);
+            polyhole(d = 5.2, h = bedBracketThickness+.2);
     }
 
     translate([0, bedBracketThickness, 22 - bedBracketThickness])
@@ -18,6 +18,6 @@ module bedBracket()
     {
         cube([bedBracketWidth, bedBracketDepth, bedBracketThickness]);
         translate([bedBracketWidth / 2, bedBracketDepth - 5, 0])
-            polyhole(d = 3, h = bedBracketThickness);
+            polyhole(d = 3.2, h = bedBracketThickness);
     }
 }

@@ -15,7 +15,7 @@ module zTop()
     }
 
     translate([10, 11, 0])
-        zRailClamp();
+        railClamp();
     translate([zTopWidth - 10, 11, 0])
-        zRailClamp();
+        railClamp();
 }

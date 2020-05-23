@@ -1,9 +1,10 @@
 include <common.scad>
 include <parts/bedBracket.scad>
+include <parts/xy-RailBrackets.scad>
 include <parts/z-top.scad>
 include <parts/z-bottom.scad>
 include <parts/z-GantryBracket.scad>
-include <parts/zRailClamp.scad>
+include <parts/railClamp.scad>
 
 bottomHeight = 40;
 secondHeight = bottomHeight + 365 + 40;
@@ -19,17 +20,17 @@ printerSizeY = 500;
 printerSizeZ = 610;
 frameExtrusionHorizontalX = printerSizeX - 40;
 frameExtrusionHorizontalY = printerSizeY - 40;
-
+yBarLength = printerSizeX - 40 - 4; // -4 for the space for the brackets
 gantryXExtrusionLength = printerSizeX - 150 - zGantryBracketX;
 gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY);
 
 zScrewLength = 365;
 zBarLength = zScrewLength + 20 + 20; //20 above for the top bracket and 20 below for the bottom bracket
 
-
 //overrides here
 
 zBarLength = 415;
+yBarLength = 450;
 
 //end overrides
 
@@ -47,7 +48,8 @@ echo("PRINT: 2x printables/z-bottom.scad");
 echo("PRINT: 2x printables/z-gantryBracket.scad");
 echo("PRINT: 4x printables/z-gantryBracketClamp.scad");
 echo("PRINT: 4x printables/bedBracket.scad");
-
+echo("PRINT: 2x printables/xy-railBracketFront.scad");
+echo("PRINT: 2x printables/xy-railBracketRear.scad");
 echo("MEASUREMENTS: Top 40x20", zScrewLength);
 echo("MEASUREMENTS: Bottom 40x20", bottomHeight);
 
@@ -182,6 +184,26 @@ module combinedGantryBracket()
     }
 }
 
+module combinedXYBar()
+{
+    color(printedColor)
+    translate([20, 0, 0]) {
+        xyRailBracketFront();
+        translate([printerSizeX - 40 - xyRailBracketBackSize, 0, 0])
+            xyRailBracketBack();
+    }
+
+    translate([printerSizeX / 2 - yBarLength / 2, 10, 36])
+        rotate([0,90,0])
+        tenMMBar(l = yBarLength);
+
+    color(bearingColor)
+    translate([printerSizeX / 2, 10, 36])
+        rotate([0,90,0])
+        lmu10();
+
+}
+
 module ZGantry()
 {
     translate([printerSizeX / 2, printerSizeY / 2, 0])
@@ -255,3 +277,15 @@ translate([printerSizeX - 20, printerSizeY / 2 + zBottomWidth / 2, bottomHeight 
 
 translate([0, 0, bottomHeight + 40 + zGantryPosition])
     ZGantry();
+
+translate([0, 0, secondHeight + 40])
+    combinedXYBar();
+
+translate([0, printerSizeY, secondHeight + 40])
+    mirror([0,1,0])
+    combinedXYBar();
+
+
+// translate([20, 20, secondHeight]) {
+//     cube([42, 42, 48]);
+// }
