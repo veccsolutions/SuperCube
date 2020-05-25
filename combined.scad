@@ -2,6 +2,9 @@ include <common.scad>
 include <parts/bedBracket.scad>
 include <parts/nema17motor.scad>
 include <parts/y-RailBrackets.scad>
+include <parts/y-carriageBearingClamp.scad>
+include <parts/y-carriageFront.scad>
+include <parts/y-carriageBack.scad>
 include <parts/z-top.scad>
 include <parts/z-bottom.scad>
 include <parts/z-GantryBracket.scad>
@@ -20,7 +23,8 @@ printerSizeY = 500;
 printerSizeZ = 610;
 frameExtrusionHorizontalX = printerSizeX - 40;
 frameExtrusionHorizontalY = printerSizeY - 40;
-yBarLength = printerSizeX - 40 - 4; // -4 for the space for the brackets
+yBarLength = printerSizeY - 40 - 4; // -4 for the space for the brackets
+xBarLength = printerSizeX - 40 - 40; // -40 for the brackets
 gantryXExtrusionLength = printerSizeX - 150 - zGantryBracketX;
 gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY);
 
@@ -42,6 +46,7 @@ zBarOffset = zBarLength - zScrewLength - 20;
 echo("PARTS: Z-SCREW Length: ", zScrewLength);
 echo("PARTS: Z-Bar: 4x ", zBarLength);
 echo("PARTS: Y-Bar: 2x ", yBarLength);
+echo("PARTS: X-Bar: 2x ", xBarLength);
 echo("PARTS: 2x Gantry X Extrusion Length: ", gantryXExtrusionLength);
 echo("PARTS: 2x Gantry Y Extrusion Length: ", gantryYExtrusionLength);
 echo("PARTS: 8x 20x20 Extrusion: ", frameExtrusionHorizontalY);
@@ -195,20 +200,28 @@ module combinedGantryBracket()
 module combinedYBarFront()
 {
     color(printedColor)
-    translate([20, 0, 0]) {
+    translate([20, 0, 0])
         yRailBracketFrontLeft();
-    }
 
     color(printedColor)
-        translate([printerSizeX, 0, 0])
-            yRailBracketFrontRight();
+    translate([printerSizeX, 0, 0])
+        yRailBracketFrontRight();
+
+    color(printedColor)
+    translate([carriageYPosition + 4.5, 10, 0])
+        yCarriageFront();
+
+    color(printedColor1)
+    translate([carriageYPosition - 6.5, 13, 58])
+        rotate([180,0,0])
+        yCarriageBearingClamp();
 
     color(bearingColor)
-    translate([carriageYPosition, 10, 36])
+    translate([carriageYPosition, 13, 38])
         rotate([0,90,0])
         lmu10();
 
-    translate([printerSizeX / 2 - yBarLength / 2, 10, 38])
+    translate([printerSizeX / 2 - yBarLength / 2, 13, 38])
         rotate([0,90,0])
         tenMMBar(l = yBarLength);
 
@@ -218,9 +231,7 @@ module combinedYBarFront()
         translate([nema17PlateWidth / 2, nema17PlateWidth / 2, 48])
             bearings12mm();
     }
-
 }
-
 
 module combinedYBarBack()
 {
@@ -230,25 +241,33 @@ module combinedYBarBack()
         yRailBracketBackLeft();
     }
 
+    color(printedColor)
+    translate([printerSizeX, 0, 0])
+        yRailBracketBackRight();
+
+    color(printedColor)
+    translate([carriageYPosition + 4.5, -60, 0])
+        yCarriageBack();
+
+    color(printedColor1)
+    translate([carriageYPosition - 6.5, -13, 18])
+        yCarriageBearingClamp();
+
+    color(bearingColor)
+    translate([carriageYPosition, -13, 38])
+        rotate([0,90,0])
+        lmu10();
+
+    translate([printerSizeX / 2 - yBarLength / 2, -13, 38])
+        rotate([0,90,0])
+        tenMMBar(l = yBarLength);
+
     translate([20, -nema17PlateWidth - 20, -45 + 13]) {
         nema17motor();
 
         translate([nema17PlateWidth / 2, nema17PlateWidth / 2, 48])
             bearings12mm();
     }
-
-    color(printedColor)
-        translate([printerSizeX, 0, 0])
-            yRailBracketBackRight();
-
-    translate([printerSizeX / 2 - yBarLength / 2, -10, 38])
-        rotate([0,90,0])
-        tenMMBar(l = yBarLength);
-
-    color(bearingColor)
-    translate([carriageYPosition, -10, 36])
-        rotate([0,90,0])
-        lmu10();
 }
 
 module ZGantry()
@@ -333,7 +352,6 @@ translate([0, printerSizeY, secondHeight + 40])
 
 //belts
 {
-    //bottom belt
     motorX = 20 + nema17PlateWidth / 2;
     backMotorY = printerSizeY - 20 - nema17PlateWidth / 2;
     frontMotorY = 20 + nema17PlateWidth / 2;
@@ -351,6 +369,11 @@ translate([0, printerSizeY, secondHeight + 40])
         translate([pulleyX, backMotorY, -2])
             bearings12mm();
 
+        translate([carriageYPosition + 30, backMotorY, -2]) //bottom back
+            bearings12mm();
+        translate([carriageYPosition + 17, frontMotorY + 13, -2]) //bottom front
+            bearings12mm();
+
         translate([motorX - 6, frontMotorY + 6, 0])
             color([.52, .36, .23])
             cube([carriageYPosition - 20 - nema17PlateWidth / 2 + 6, 1, 6]);
@@ -363,7 +386,9 @@ translate([0, printerSizeY, secondHeight + 40])
         translate([pulleyX + 6, pulleyFrontY - 6, 0])
             color([.52, .36, .23])
             cube([1, rightBeltLength, 6]);
-        translate([carriageYPosition, pulleyBackY, 0]) //todo: figure out the x carriage and update the belt length
+
+        // y slider side
+        translate([carriageYPosition + 14, pulleyBackY, 0]) //todo: figure out the x carriage and update the belt length
             color([.52, .36, .23])
             cube([printerSizeY - carriageYPosition - 20 - nema17PlateWidth / 2 + 12, 1, 6]);
     }
@@ -374,9 +399,17 @@ translate([0, printerSizeY, secondHeight + 40])
             bearings12mm();
         translate([pulleyX, backMotorY, -2])
             bearings12mm();
+
+        translate([carriageYPosition + 17, backMotorY - 12, -2]) //top back
+            bearings12mm();
+        translate([carriageYPosition + 30, frontMotorY + 1, -2]) //top front
+            bearings12mm();
+
+        // motor side inner
         translate([motorX - 6, backMotorY - 6, 0])
             color([.52, .36, .23])
-            cube([carriageYPosition - 20 - nema17PlateWidth / 2 + 6, 1, 6]);
+            cube([carriageYPosition - 5 - nema17PlateWidth / 2 + 6, 1, 6]);
+
         translate([motorX - 6 - 1, backMotorY - 6, 0])
             color([.52, .36, .23])
             cube([1, 13, 6]);
@@ -387,12 +420,25 @@ translate([0, printerSizeY, secondHeight + 40])
         translate([pulleyX + 6, pulleyFrontY - 6, 0])
             color([.52, .36, .23])
             cube([1, rightBeltLength, 6]);
+
+        // y slider side
         translate([carriageYPosition, pulleyFrontY - 6, 0]) //todo: figure out the x carriage and update the belt length
             color([.52, .36, .23])
             cube([printerSizeY - carriageYPosition - 20 - nema17PlateWidth / 2 + 12, 1, 6]);
     }
 }
 
+// x rods
+{
+    translate([carriageYPosition, printerSizeX / 2 - xBarLength / 2, 480]) {
+        translate([0, 0, 40])
+            rotate([-90,0,0])
+            tenMMBar(l = xBarLength);
+            
+        rotate([-90,0,0])
+        tenMMBar(l = xBarLength);
+    }
+}
 // translate([20, 20, secondHeight]) {
 //     cube([42, 42, 48]);
 // }

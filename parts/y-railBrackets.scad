@@ -12,7 +12,7 @@ module yRailBracketMotor(motorHeight = 12)
                         polyhole(d = 5, h = 2.2);
             }
             
-            translate([22, 10, 29])
+            translate([22, 13, 29])
                 rotate([90,0,-90])
                 railClamp();
 
@@ -68,7 +68,7 @@ module yRailBracketBackLeft()
 
 module yRailBracketRight() {
     translate([20, 0, 0]) {
-        translate([2, 10, 29])
+        translate([2, 13, 29])
             rotate([90,0,90])
                 railClamp();
 
