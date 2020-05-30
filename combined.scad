@@ -1,5 +1,6 @@
 include <common.scad>
 include <parts/bedBracket.scad>
+include <parts/e3dv6.scad>
 include <parts/nema17motor.scad>
 include <parts/x-carriageBearingClamp.scad>
 include <parts/x-carriageE3DV6.scad>
@@ -12,8 +13,27 @@ include <parts/z-bottom.scad>
 include <parts/z-GantryBracket.scad>
 include <parts/railClamp.scad>
 
-renderFrame = false;
+// positions
+zGantryPosition = 0;
+carriageYPosition = 300;//printerSizeX / 2;
+carriageXPosition = 300;//printerSizeX / 2;
 
+// render options
+renderFrame = true;
+renderBelts = true;
+renderZAxis = true;
+renderZGantry = true;
+renderYAxis = true;
+renderXAxis = true;
+renderXCarriage = true;
+renderE3DHotEnd = true;
+
+// sizes
+heatBedX = 300;
+heatBedY = 300;
+printerSizeX = 500;
+printerSizeY = 500;
+printerSizeZ = 610;
 
 bottomHeight = 40;
 secondHeight = bottomHeight + 365 + 40;
@@ -22,21 +42,13 @@ printedColor1 = [.6, .1, .1];
 frameColor = [.2, .2, .2];
 bearingColor = [.5, .5, .5];
 beltColor = [.52, .36, .23];
-heatBedX = 220;
-heatBedY = 200;
-printerSizeX = 500;
-printerSizeY = 500;
-printerSizeZ = 610;
+purpleColor = [.64, .12, .94];
 frameExtrusionHorizontalX = printerSizeX - 40;
 frameExtrusionHorizontalY = printerSizeY - 40;
 yBarLength = printerSizeY - 40 - 4; // -4 for the space for the brackets
 xBarLength = printerSizeX - 40 - 40; // -40 for the brackets
 gantryXExtrusionLength = printerSizeX - 150 - zGantryBracketX;
 gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY);
-
-zGantryPosition = 0;
-carriageYPosition = 200;//printerSizeX / 2;
-carriageXPosition = 100;//printerSizeX / 2;
 
 zScrewLength = 365;
 zBarLength = zScrewLength + 20 + 20; //20 above for the top bracket and 20 below for the bottom bracket
@@ -49,7 +61,8 @@ yBarLength = 450;
 //end overrides
 
 zBarOffset = zBarLength - zScrewLength - 20;
-actualCarriageXPosition = carriageXPosition + 100;
+actualCarriageYPosition = carriageYPosition + 105;
+actualCarriageXPosition = carriageXPosition + 120;
 
 echo("PARTS: Z-SCREW Length: ", zScrewLength);
 echo("PARTS: Z-Bar: 4x ", zBarLength);
@@ -216,16 +229,16 @@ module combinedYBarFront()
         yRailBracketFrontRight();
 
     color(printedColor)
-    translate([carriageYPosition + 4.5, 10, 0])
+    translate([actualCarriageYPosition + 4.5, 10, 0])
         yCarriageFront();
 
     color(printedColor1)
-    translate([carriageYPosition - 6.5, 13, 58])
+    translate([actualCarriageYPosition - 6.5, 13, 58])
         rotate([180,0,0])
         yCarriageBearingClamp();
 
     color(bearingColor)
-    translate([carriageYPosition, 13, 38])
+    translate([actualCarriageYPosition, 13, 38])
         rotate([0,90,0])
         lmu10();
 
@@ -254,15 +267,15 @@ module combinedYBarBack()
         yRailBracketBackRight();
 
     color(printedColor)
-    translate([carriageYPosition + 4.5, -60, 0])
+    translate([actualCarriageYPosition + 4.5, -60, 0])
         yCarriageBack();
 
     color(printedColor1)
-    translate([carriageYPosition - 6.5, -13, 18])
+    translate([actualCarriageYPosition - 6.5, -13, 18])
         yCarriageBearingClamp();
 
     color(bearingColor)
-    translate([carriageYPosition, -13, 38])
+    translate([actualCarriageYPosition, -13, 38])
         rotate([0,90,0])
         lmu10();
 
@@ -310,19 +323,19 @@ module ZGantry()
         mirror([0, 1])
         {
             translate([-(heatBedX / 2), 0, 0])
-                    bedBracketWithScrew();
+                bedBracketWithScrew();
 
             translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
-                    bedBracketWithScrew();
+                bedBracketWithScrew();
         }
 
-        translate([0, +(heatBedY / 2) - bedBracketThickness - bedBracketDepth, 0])
+        translate([0, (heatBedY / 2) - bedBracketThickness - bedBracketDepth, 0])
         {
             translate([-(heatBedX / 2), 0, 0])
-                    bedBracketWithScrew();
+                bedBracketWithScrew();
 
             translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
-                    bedBracketWithScrew();
+                bedBracketWithScrew();
         }
 
         translate([gantryXExtrusionLength / 2 + 20, -zGantryBracketY / 2, 0])
@@ -338,29 +351,7 @@ module ZGantry()
     }
 }
 
-if (renderFrame)
-    color(frameColor)
-        frame();
-
-translate([20, printerSizeY / 2 - zBottomWidth / 2, bottomHeight + 40])
-    mirror([1, -1, 0])
-        zAxis();
-
-translate([printerSizeX - 20, printerSizeY / 2 + zBottomWidth / 2, bottomHeight + 40])
-    mirror([1, 1, 0])
-        zAxis();
-
-translate([0, 0, bottomHeight + 40 + zGantryPosition])
-    ZGantry();
-
-translate([0, 0, secondHeight + 40])
-    combinedYBarFront();
-
-translate([0, printerSizeY, secondHeight + 40])
-    combinedYBarBack();
-
-//belts
-{
+module Belts() {
     motorX = 20 + nema17PlateWidth / 2;
     backMotorY = printerSizeY - 20 - nema17PlateWidth / 2;
     frontMotorY = 20 + nema17PlateWidth / 2;
@@ -380,9 +371,9 @@ translate([0, printerSizeY, secondHeight + 40])
             bearings12mm();
 
         // carriage idlers
-        translate([carriageYPosition + 17, frontMotorY + 13, -2]) //front
+        translate([actualCarriageYPosition + 17, frontMotorY + 13, -2]) //front
             bearings12mm();
-        translate([carriageYPosition + 30, backMotorY, -2]) //back
+        translate([actualCarriageYPosition + 30, backMotorY, -2]) //back
             bearings12mm();
 
         color(beltColor) {
@@ -392,7 +383,7 @@ translate([0, printerSizeY, secondHeight + 40])
 
             // x front inner
             translate([motorX - 6, frontMotorY + 6, 0])
-                cube([carriageYPosition - 12, 1, 6]);
+                cube([actualCarriageYPosition - 12, 1, 6]);
                 
             // x front outer
             translate([motorX - 6 - 1, frontMotorY - 6, 0])
@@ -403,15 +394,15 @@ translate([0, printerSizeY, secondHeight + 40])
                 cube([1, rightBeltLength, 6]);
 
             // x back
-            translate([carriageYPosition + 23, pulleyBackY, 0])
-                cube([pulleyX - (carriageYPosition + 23) + 6, 1, 6]);
+            translate([actualCarriageYPosition + 23, pulleyBackY, 0])
+                cube([pulleyX - (actualCarriageYPosition + 23) + 6, 1, 6]);
 
             // y back
-            translate([carriageYPosition + 23, actualCarriageXPosition, 0]) // end: backMotorY + 6
+            translate([actualCarriageYPosition + 23, actualCarriageXPosition, 0]) // end: backMotorY + 6
                 cube([1, (backMotorY + 6) - actualCarriageXPosition, 6]);
 
             // y front
-            translate([carriageYPosition + 23, frontMotorY + 6, 0]) // end: backMotorY + 6
+            translate([actualCarriageYPosition + 23, frontMotorY + 6, 0]) // end: backMotorY + 6
                 cube([1, actualCarriageXPosition - 40 - frontMotorY - 6, 6]);
         }
     }
@@ -425,9 +416,9 @@ translate([0, printerSizeY, secondHeight + 40])
             bearings12mm();
 
         // carriage idlers
-        translate([carriageYPosition + 30, frontMotorY + 1, -2]) //front
+        translate([actualCarriageYPosition + 30, frontMotorY + 1, -2]) //front
             bearings12mm();
-        translate([carriageYPosition + 17, backMotorY - 12, -2]) // back
+        translate([actualCarriageYPosition + 17, backMotorY - 12, -2]) // back
             bearings12mm();
 
         color(beltColor) {
@@ -436,8 +427,8 @@ translate([0, printerSizeY, secondHeight + 40])
                 cube([1, 13, 6]);
 
             // x front
-            translate([carriageYPosition + 23, pulleyFrontY - 6, 0])
-                cube([pulleyX - (carriageYPosition + 23) + 6, 1, 6]);
+            translate([actualCarriageYPosition + 23, pulleyFrontY - 6, 0])
+                cube([pulleyX - (actualCarriageYPosition + 23) + 6, 1, 6]);
             
             // y long
             translate([pulleyX + 6, pulleyFrontY - 6, 0])
@@ -445,26 +436,54 @@ translate([0, printerSizeY, secondHeight + 40])
 
             // x back inner
             translate([motorX - 6, backMotorY - 6, 0])
-                cube([carriageYPosition - 12, 1, 6]);
+                cube([actualCarriageYPosition - 12, 1, 6]);
             
             // x back outer
             translate([motorX - 6 - 1, backMotorY + 6, 0])
                 cube([printerSizeX - 20 - nema17PlateWidth, 1, 6]);
 
             // y back
-            translate([carriageYPosition + 23, actualCarriageXPosition, 0]) // end: backMotorY + 6
+            translate([actualCarriageYPosition + 23, actualCarriageXPosition, 0]) // end: backMotorY + 6
                 cube([1, backMotorY - actualCarriageXPosition - 5, 6]);
 
             // y front
-            translate([carriageYPosition + 23, frontMotorY - 6, 0]) // end: backMotorY + 6
+            translate([actualCarriageYPosition + 23, frontMotorY - 6, 0]) // end: backMotorY + 6
                 cube([1, actualCarriageXPosition - 40 - frontMotorY + 6, 6]);
         }
     }
 }
 
-// x rods
-{
-    translate([carriageYPosition, printerSizeX / 2 - xBarLength / 2, 480]) {
+if (renderFrame)
+    color(frameColor)
+        frame();
+
+if (renderZAxis) {
+    translate([20, printerSizeY / 2 - zBottomWidth / 2, bottomHeight + 40])
+        mirror([1, -1, 0])
+            zAxis();
+
+    translate([printerSizeX - 20, printerSizeY / 2 + zBottomWidth / 2, bottomHeight + 40])
+        mirror([1, 1, 0])
+            zAxis();
+}
+
+if (renderZGantry)
+    translate([0, 0, bottomHeight + 40 + zGantryPosition])
+        ZGantry();
+
+if (renderYAxis) {
+    translate([0, 0, secondHeight + 40])
+        combinedYBarFront();
+
+    translate([0, printerSizeY, secondHeight + 40])
+        combinedYBarBack();
+}
+
+if (renderBelts)
+    Belts();
+
+if (renderXAxis)
+    translate([actualCarriageYPosition, printerSizeX / 2 - xBarLength / 2, 480]) {
         translate([0, 0, 40])
             rotate([-90,0,0])
             tenMMBar(l = xBarLength);
@@ -472,27 +491,52 @@ translate([0, printerSizeY, secondHeight + 40])
         rotate([-90,0,0])
         tenMMBar(l = xBarLength);
     }
-}
 
-translate([carriageYPosition - 12, actualCarriageXPosition, secondHeight + 15])
-rotate([0,0,-90])
-{
-    xCarriageE3DV6();
+if (renderXCarriage) {
+    translate([actualCarriageYPosition - 12, actualCarriageXPosition, secondHeight + 15])
+        rotate([0,0,-90])
+        {
+            xCarriageE3DV6();
 
-    color(bearingColor)
-    translate([5.5, 12, 20])
-        rotate([0, 90, 0])
-            lmu10();
+            color(bearingColor)
+            translate([5.5, 12, 20])
+                rotate([0, 90, 0])
+                    lmu10();
 
-    color(bearingColor)
-    translate([5.6, 12, 60])
-        rotate([0, 90, 0])
-            lmu10();
+            color(bearingColor)
+            translate([5.6, 12, 60])
+                rotate([0, 90, 0])
+                    lmu10();
 
+            translate([0, 5, 0])
+                xCarriageBearingClamp();
 
-    translate([0, 5, 0])
-        xCarriageBearingClamp();
+            translate([30,35.5,20])
+                xCarriageBearingBeltClamp();
+        
+                
+            if (renderE3DHotEnd) {
+                translate([20, -15, 50])
+                {
+                    rotate([0,0,-90])
+                        e3dv6();
 
-    translate([30,35.5,20])
-        xCarriageBearingBeltClamp();
+                    //cold end fan bracket
+                    color(purpleColor)
+                    translate([-15, -15, -50])
+                        e3dv6Fan();
+                    
+                    //cold end fan
+                    color([.4,.4,.4])
+                    translate([-15, -25, -50])
+                        cube([30, 10, 30]);
+
+                    //part fan
+                    color([.4,.4,.4])
+                    translate([-25, 35, -60])
+                        rotate([30, 0, 0])
+                        cube([50, 50, 15]);
+                }
+            }
+        }
 }
