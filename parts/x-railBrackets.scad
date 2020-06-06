@@ -1,13 +1,13 @@
-yRailBracketSizeHeight = 72;
-yRailBracketBackSize = 10;
+xRailBracketSizeHeight = 72;
+xRailBracketBackSize = 10;
 
-module yRailBracketMotor(motorHeight = 12)
+module xRailBracketMotor(motorHeight = 12)
 {
     difference() {
         union() {
             difference() {
-                cube([2, 20, yRailBracketSizeHeight]);
-                translate([-.1, 10, yRailBracketSizeHeight - 10])
+                cube([2, 20, xRailBracketSizeHeight]);
+                translate([-.1, 10, xRailBracketSizeHeight - 10])
                     rotate([0, 90, 0])
                         polyhole(d = 5, h = 2.2);
             }
@@ -19,11 +19,11 @@ module yRailBracketMotor(motorHeight = 12)
             translate([-20, 20, 0])
             {
                 difference() {
-                    cube([20 + 2, 2, yRailBracketSizeHeight]);
+                    cube([20 + 2, 2, xRailBracketSizeHeight]);
                     translate([10, -.1, 10])
                         rotate([-90, 0, 0])
                             polyhole(d = 5, h = 2.2);
-                    translate([10, -.1, yRailBracketSizeHeight - 10])
+                    translate([10, -.1, xRailBracketSizeHeight - 10])
                         rotate([-90, 0, 0])
                             polyhole(d = 5, h = 2.2);        }
 
@@ -54,27 +54,27 @@ module yRailBracketMotor(motorHeight = 12)
     }
 }
 
-module yRailBracketFrontLeft()
+module xRailBracketFrontLeft()
 {
-    yRailBracketMotor(motorHeight = 0);
+    xRailBracketMotor(motorHeight = 0);
 }
 
-module yRailBracketBackLeft()
+module xRailBracketBackLeft()
 {
     mirror([0,1,0])
 
-    yRailBracketMotor(motorHeight = 13);
+    xRailBracketMotor(motorHeight = 13);
 }
 
-module yRailBracketRight() {
+module xRailBracketRight() {
     translate([20, 0, 0]) {
         translate([2, 13, 29])
             rotate([90,0,90])
                 railClamp();
 
        difference() {
-            cube([2, 20, yRailBracketSizeHeight]);
-            translate([-.1, 10, yRailBracketSizeHeight - 6])
+            cube([2, 20, xRailBracketSizeHeight]);
+            translate([-.1, 10, xRailBracketSizeHeight - 6])
                 rotate([0, 90, 0])
                     polyhole(d = 5, h = 2.2);
             
@@ -103,12 +103,12 @@ module yRailBracketRight() {
     translate([0, 20, 0])
     difference()
     {
-        cube([22, 2, yRailBracketSizeHeight]);
+        cube([22, 2, xRailBracketSizeHeight]);
 
         translate([10, -.1, 10])
             rotate([-90, 0, 0])
                 polyhole(d = 5, h = 2.2);
-        translate([10, -.1, yRailBracketSizeHeight -10])
+        translate([10, -.1, xRailBracketSizeHeight -10])
             rotate([-90, 0, 0])
                 polyhole(d = 5, h = 2.2);
     }
@@ -132,15 +132,15 @@ module yRailBracketRight() {
     }
 }
 
-module yRailBracketFrontRight()
+module xRailBracketFrontRight()
 {
     mirror([1,0,0])
-        yRailBracketRight();
+        xRailBracketRight();
 }
 
-module yRailBracketBackRight()
+module xRailBracketBackRight()
 {
     mirror([1, 0, 0])
     mirror([0, 1, 0])
-        yRailBracketRight();
+        xRailBracketRight();
 }

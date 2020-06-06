@@ -1,4 +1,8 @@
 include <../common.scad>
 include <../parts/z-gantryBracket.scad>
 
-zGantryBracketClamp()
+echo("With Supports: no");
+
+translate([0,0,11.5])
+    rotate([0,90,0])
+        zGantryBracketClamp();

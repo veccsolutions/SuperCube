@@ -1,4 +1,5 @@
 include <../common.scad>
 include <../parts/bedBracket.scad>
 
-bedBracket();
+rotate([90,0,0])
+    bedBracket();

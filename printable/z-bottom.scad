@@ -1,5 +1,8 @@
 include <../common.scad>
-include <../parts/zRailClamp.scad>
+include <../parts/railClamp.scad>
 include <../parts/z-bottom.scad>
 
-zBottom();
+echo("With Supports: no");
+
+rotate([90, 0, 0])
+    zBottom();
