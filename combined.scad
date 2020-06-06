@@ -14,7 +14,7 @@ include <parts/z-GantryBracket.scad>
 include <parts/railClamp.scad>
 
 // positions
-zGantryPosition = 0;
+zGantryPosition = 330;
 carriageYPosition = 300;//printerSizeX / 2;
 carriageXPosition = 300;//printerSizeX / 2;
 
@@ -493,7 +493,10 @@ if (renderXAxis)
     }
 
 if (renderXCarriage) {
-    translate([actualCarriageYPosition - 12, actualCarriageXPosition, secondHeight + 15])
+    translate([actualCarriageYPosition - 12, actualCarriageXPosition, secondHeight + 15]) {
+        translate([-15, -40, 35])
+            rotate([0,0,90])
+                xCarriageE3DV6Clamp();
         rotate([0,0,-90])
         {
             xCarriageE3DV6();
@@ -539,4 +542,5 @@ if (renderXCarriage) {
                 }
             }
         }
+    }
 }
