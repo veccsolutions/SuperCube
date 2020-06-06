@@ -21,12 +21,12 @@ carriageXPosition = 300;//printerSizeX / 2;
 // render options
 renderFrame = true;
 renderBelts = true;
-renderZAxis = true;
-renderZGantry = true;
-renderYAxis = true;
-renderXAxis = true;
-renderXCarriage = true;
-renderE3DHotEnd = true;
+renderZAxis = false;
+renderZGantry = false;
+renderYAxis = false;
+renderXAxis = false;
+renderXCarriage = false;
+renderE3DHotEnd = false;
 
 // sizes
 heatBedX = 300;
@@ -64,25 +64,40 @@ zBarOffset = zBarLength - zScrewLength - 20;
 actualCarriageYPosition = carriageYPosition + 105;
 actualCarriageXPosition = carriageXPosition + 120;
 
+echo("PARTS: 2x 10mm Steel Bar", xBarLength, "X");
+echo("PARTS: 2x 10mm Steel Bar", yBarLength, "Y");
+echo("PARTS: 4x 10mm Steel Bar: ", zBarLength, "Z");
+echo("PARTS: 2x  20x20 Extrusion: ", gantryXExtrusionLength, "gantry - x");
+echo("PARTS: 2x  20x20 Extrusion: ", gantryYExtrusionLength, "gantry - Y");
+echo("PARTS: 8x  20x20 Extrusion: ", frameExtrusionHorizontalX, " frame - X");
+echo("PARTS: 8x  20x40 Extrusion: ", frameExtrusionHorizontalY, " frame - Y");
+echo("PARTS: 4x  20x20 Extrusion: ", printerSizeZ);
+echo("PARTS: 2x  M4x35mm screws - right side belt bearings");
+echo("PARTS: 4x  M4x15mm screws - y rail bearings");
+echo("PARTS: 32x M3x5mm screws - rod clamp screws");
+echo("PARTS: 16x M3x10mm screws - motor screws");
 echo("PARTS: Z-SCREW Length: ", zScrewLength);
-echo("PARTS: Z-Bar: 4x ", zBarLength);
-echo("PARTS: Y-Bar: 2x ", yBarLength);
-echo("PARTS: X-Bar: 2x ", xBarLength);
-echo("PARTS: 2x Gantry X Extrusion Length: ", gantryXExtrusionLength);
-echo("PARTS: 2x Gantry Y Extrusion Length: ", gantryYExtrusionLength);
-echo("PARTS: 8x 20x20 Extrusion: ", frameExtrusionHorizontalY);
-echo("PARTS: 8x 20x40 Extrusion: ", frameExtrusionHorizontalY);
-echo("PARTS: 4x 20x20 Extrusion: ", printerSizeZ);
-echo("PRINT: 2x printables/z-top.scad");
+echo("PARTS: 2x Z-Motors");
+echo("PARTS: 2x XY-Motors");
+echo("PARTS: 6mm Belt length (rough estimate):", (frameExtrusionHorizontalX * 2 + frameExtrusionHorizontalY) * 2);
+echo("PARTS: 6x 6mm Toothed Idler Pulleys");
+echo("PARTS: 2x 6mm Smooth Idler Pulleys");
+
+echo("PRINT: 1x printables/x-carriageBack.scad");
+echo("PRINT: 1x printables/x-carriageBackBeltClamp.scad");
+echo("PRINT: 1x printables/x-carriageE3DV6.scad");
+echo("PRINT: 1x printables/x-carriageE3DV6Clamp.scad");
+echo("PRINT: 2x printables/y-carriageBack.scad");
+echo("PRINT: 1x printables/y-railBracketBackLeft.scad");
+echo("PRINT: 1x printables/y-railBracketBackRight.scad");
+echo("PRINT: 1x printables/y-railBracketFrontLeft.scad");
+echo("PRINT: 1x printables/y-railBracketFrontRight.scad");
 echo("PRINT: 2x printables/z-bottom.scad");
 echo("PRINT: 2x printables/z-gantryBracket.scad");
 echo("PRINT: 4x printables/z-gantryBracketClamp.scad");
+echo("PRINT: 2x printables/z-top.scad");
 echo("PRINT: 4x printables/bedBracket.scad");
-echo("PRINT: 1x printables/y-railBracketFrontLeft.scad");
-echo("PRINT: 1x printables/y-railBracketFrontRight.scad");
-echo("PRINT: 1x printables/y-railBracketBackLeft.scad");
-echo("PRINT: 1x printables/y-railBracketBackRight.scad");
-echo("PRINT: 2x M4x35mm screws"); //right side bearings
+
 
 echo("MEASUREMENTS: Top 40x20", zScrewLength);
 echo("MEASUREMENTS: Bottom 40x20", bottomHeight);
@@ -159,7 +174,8 @@ module frame()
 
 module zAxis()
 {
-    mirror([0, 0, 1])
+    translate([zBottomWidth, 0, 0])
+    rotate([180, 0, 180])
     color(printedColor)
         zBottom();
 
@@ -193,13 +209,19 @@ module zAxis()
         zTop();
 }
 
-module bedBracketWithScrew()
+module bedBracketWithScrew(hole = 1)
 {
     color(printedColor)
         bedBracket();
 
-    translate([5, bedBracketDepth, bedBracketHeight - 10])
-        polyhole(d = 3, h = bedBracketThickness + 15);
+    if (hole == 1) {
+        translate([5, bedBracketDepth, bedBracketHeight - 10])
+            polyhole(d = 3, h = bedBracketThickness + 15);
+    }
+    else {
+        translate([bedBracketWidth - 5, bedBracketDepth, bedBracketHeight - 10])
+            polyhole(d = 3, h = bedBracketThickness + 15);
+    }
 }
 
 module combinedGantryBracket()
@@ -320,13 +342,13 @@ module ZGantry()
         }
 
         translate([0, -(heatBedY / 2) + bedBracketThickness + bedBracketDepth, 0])
-        mirror([0, 1])
+        rotate([0, 0, 180])
         {
             translate([-(heatBedX / 2), 0, 0])
                 bedBracketWithScrew();
 
             translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
-                bedBracketWithScrew();
+                bedBracketWithScrew(hole = 2);
         }
 
         translate([0, (heatBedY / 2) - bedBracketThickness - bedBracketDepth, 0])
@@ -335,7 +357,7 @@ module ZGantry()
                 bedBracketWithScrew();
 
             translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
-                bedBracketWithScrew();
+                bedBracketWithScrew(hole = 2);
         }
 
         translate([gantryXExtrusionLength / 2 + 20, -zGantryBracketY / 2, 0])
@@ -343,10 +365,10 @@ module ZGantry()
             combinedGantryBracket();
         }
 
-        translate([-gantryXExtrusionLength / 2 - 20, -zGantryBracketY / 2, 0])
+        translate([-gantryXExtrusionLength / 2 - 20, zGantryBracketY / 2, 0])
         {
-            mirror([1, 0, 0])
-            combinedGantryBracket();
+            rotate([0, 0, 180])
+                combinedGantryBracket();
         }
     }
 }
@@ -458,12 +480,12 @@ if (renderFrame)
         frame();
 
 if (renderZAxis) {
-    translate([20, printerSizeY / 2 - zBottomWidth / 2, bottomHeight + 40])
-        mirror([1, -1, 0])
+    translate([20, printerSizeY / 2 + zBottomWidth / 2, bottomHeight + 40])
+        rotate([0, 0, -90])
             zAxis();
 
-    translate([printerSizeX - 20, printerSizeY / 2 + zBottomWidth / 2, bottomHeight + 40])
-        mirror([1, 1, 0])
+    translate([printerSizeX - 20, printerSizeY / 2 - zBottomWidth / 2, bottomHeight + 40])
+        rotate([0, 0, 90])
             zAxis();
 }
 
