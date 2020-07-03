@@ -17,16 +17,16 @@ include <parts/railClamp.scad>
 
 // positions
 zGantryPosition = 330;
-carriageYPosition = 0;//printerSizeX / 2;
+carriageYPosition = 300;//printerSizeX / 2;
 carriageXPosition = 300;//printerSizeX / 2;
 
 // render options
-renderFrame = false;
-renderBelts = false;
-renderZAxis = false;
-renderZGantry = false;
-renderYAxis = false;
-renderXAxis = false;
+renderFrame = true;
+renderBelts = true;
+renderZAxis = true;
+renderZGantry = true;
+renderYAxis = true;
+renderXAxis = true;
 renderYCarriage = true;
 renderE3DHotEnd = true;
 
@@ -57,7 +57,7 @@ zBarLength = zScrewLength + 20 + 20; //20 above for the top bracket and 20 below
 
 //overrides here
 
-zBarLength = 415;
+//zBarLength = 415;
 XBarLength = 450;
 
 //end overrides
@@ -308,7 +308,7 @@ module combinedXBarBack()
 {
     color(printedColor)
     translate([20, 0, 0]) {
-        rotate([0, 0, 0])
+        // rotate([0, 0, -90])
         xRailBracketBackLeft();
     }
 
@@ -576,12 +576,14 @@ if (renderYCarriage) {
 
                     //cold end fan bracket
                     color(purpleColor)
-                    translate([-15, -15, -50])
+                    translate([15, -15, -50])
+                        rotate([0,0,90])
                         e3dv6Fan();
                     
                     //cold end fan
                     color([.4,.4,.4])
-                    translate([-15, -25, -50])
+                    translate([25, -15, -50])
+                        rotate([0,0,90])
                         cube([30, 10, 30]);
 
                     //part fan

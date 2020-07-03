@@ -32,7 +32,7 @@ module zGantryBracketScrewBracket()
 {
     depth = zGantryBracketX +  19 / 2;
 
-    translate([0,0, 10])
+    translate([0,0, 18])
     difference()
     {
         cube([depth,30,2]);
@@ -53,21 +53,21 @@ module zGantryBracketScrewBracket()
         }
     }
 
-    rotate([0,0,-90])
-    translate([0, 0, 12])
-        triangle(out = depth, up = 8, thick = 2);
+    // rotate([0,0,-90])
+    // translate([0, 0, 12])
+    //     triangle(out = depth, up = 20, thick = 2);
 
-    rotate([0,0,-90])
-    translate([-28, 0, 12])
-        triangle(out = depth, up = 8, thick = 2);
+    // rotate([0,0,-90])
+    // translate([-28, 0, 12])
+    //     triangle(out = depth, up = 8, thick = 2);
 
-    translate([0, 2, 10])
+    translate([0, 2, 20])
         rotate([180,0,90])
-        triangle(out = depth, up = 8, thick = 2);
+        triangle(out = depth, up = 20, thick = 2);
 
-    translate([0, 30, 10])
+    translate([0, 30, 20])
         rotate([180,0,90])
-        triangle(out = depth, up = 8, thick = 2);
+        triangle(out = depth, up = 20, thick = 2);
     
 }
 
