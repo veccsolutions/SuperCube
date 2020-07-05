@@ -39,8 +39,8 @@ module zBottom()
     translate([(zBottomWidth - motorMountWidth) / 2, 4, 0])
         zBottomMotorMount();
 
-    translate([10, 11, 10])
+    translate([10, 11, 0])
         railClamp();
-    translate([zBottomWidth - 10, 11, 10])
+    translate([zBottomWidth - 10, 11, 0])
         railClamp();
 }
