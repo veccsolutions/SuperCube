@@ -25,11 +25,11 @@ module zBottom()
         cube([zBottomWidth, 4, 40]);
         translate([21.5, -.1, 10])
             rotate([-90, 0, 0])
-                hole5mm(h = 2.2);
+                hole5mm(h = 4.2);
 
         translate([zBottomWidth-21.5, -.1, 10])
             rotate([-90, 0, 0])
-                hole5mm(h = 2.2);
+                hole5mm(h = 4.2);
     }
 
     translate([(zBottomWidth - motorMountWidth) / 2, 4, 0])
