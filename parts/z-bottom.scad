@@ -22,7 +22,7 @@ module zBottom()
 
     difference()
     {
-        cube([zBottomWidth, 4, 40]);
+        cube([zBottomWidth, 4, 20]);
         translate([21.5, -.1, 10])
             rotate([-90, 0, 0])
                 hole5mm(h = 4.2);

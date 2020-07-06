@@ -6,7 +6,7 @@ module railClamp(l = 20, d = 10, h = 10)
         union()
         {
             translate([-7, -7, 0])
-                cube([14, 13 + h, l]);
+                cube([14, 12 + h, l]);
 
             translate([0, 5 + h, 0])
                 cylinder(d = 14, h = l + 0, $fn=100);
