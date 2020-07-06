@@ -21,10 +21,10 @@ module railClamp(l = 20, d = 10, h = 10)
         // screw holes
         translate([-7, h + 8, 5])
             rotate([0, 90, 0])
-                polyhole(d = 3.5, h = 100);
+                hole3mm(h = 100);
         translate([-7, h + 8, 15])
             rotate([0, 90, 0])
-                polyhole(d = 3.5, h = 100);
+                hole3mm(h = 100);
 
         //screw insets
         translate([-8, h + 5, 2])

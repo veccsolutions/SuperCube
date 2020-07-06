@@ -12,12 +12,12 @@ module nema17MotorPlate(h = 2)
         o = (42.3 - 31) / 2;
 
         translate([o, o, -.1])
-            polyhole(d = 3, h = h + .2);
+            hole3mm(h = h + .2);
         translate([o, 42.3 - o, -.1])
-            polyhole(d = 3, h = h + .2);
+            hole3mm(h = h + .2);
         translate([42.3 - o, o, -.1])
-            polyhole(d = 3, h = h + .2);            
+            hole3mm(h = h + .2);            
         translate([42.3 - o, 42.3 - o, -.1])
-            polyhole(d = 3, h = h + .2);
+            hole3mm(h = h + .2);
     }
 }

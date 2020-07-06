@@ -46,22 +46,22 @@ module xCarriageFront() {
                 translate([0, 14, 53]) {
                     translate([-6, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 12.2);
+                            hole3mm(h = 12.2);
 
                     translate([28, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 12.2);
+                            hole3mm(h = 12.2);
                 }
                 
                 // bearing clamp screw holes bottom
                 translate([0, 25, 53-30]) {
                     translate([-6, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 25.2);
+                            hole3mm(h = 25.2);
 
                     translate([28, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 25.2);
+                            hole3mm(h = 25.2);
                 }
 
                 // nut rail  
@@ -71,12 +71,12 @@ module xCarriageFront() {
 
             translate([-4, 50, -7]) //12
                 mirror([0, 1, 0])
-                rotate([-90, 0, 0])
-                railClamp(l = 30, h = -1);
+                    rotate([-90, 0, 0])
+                        railClamp(l = 30, h = -1);
 
             translate([-4, 50, 37])
                 rotate([90,0, 0])
-                railClamp(l = 40, h = -1);
+                    railClamp(l = 40, h = -1);
         }
 
         // Y slide bearing cutout

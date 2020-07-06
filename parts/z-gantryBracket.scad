@@ -17,14 +17,14 @@ module zGantryBracketClampBase()
 
         translate([zGantryBracketX - 10, 5, 10])
             rotate([0, 90, 0])
-            polyhole(d = 3, h = 10.1);
+                hole3mm(h = 10.1);
 
         translate([zGantryBracketX - 8, zGantryBracketBaseWidth - 10, 10 - 6 / 2])
             cube([3, 10.1, 6]);
             
         translate([zGantryBracketX - 10, zGantryBracketBaseWidth - 5, 10])
             rotate([0, 90, 0])
-            polyhole(d = 3, h = 10.1);    
+                hole3mm(h = 10.1);    
     }
 }
 
@@ -43,23 +43,23 @@ module zGantryBracketScrewBracket()
             polyhole(d = 12, h = 3);
 
             translate([-7.5, -7.5, 0])
-                polyhole(d = 3, h = 3);
+                hole3mm(h = 3);
             translate([7.5, -7.5, 0])
-                polyhole(d = 3, h = 3);
+                hole3mm(h = 3);
             translate([-7.5, 7.5, 0])
-                polyhole(d = 3, h = 3);
+                hole3mm(h = 3);
             translate([7.5, 7.5, 0])
-                polyhole(d = 3, h = 3);
+                hole3mm(h = 3);
         }
     }
 
     translate([0, 2, 20])
         rotate([180,0,90])
-        triangle(out = depth, up = 20, thick = 2);
+            triangle(out = depth, up = 20, thick = 2);
 
     translate([0, 30, 20])
         rotate([180,0,90])
-        triangle(out = depth, up = 20, thick = 2);
+            triangle(out = depth, up = 20, thick = 2);
 }
 
 
@@ -116,7 +116,7 @@ module zGantryBracketClamp()
         translate([-.1, 5, 10])
             rotate([0, 90, 0])
             {
-                polyhole(d = 3, h = width + .2);
+                hole3mm(h = width + .2);
 
                 translate([0, 0, width - 3])
                     polyhole(d = 6, h = 3.2);

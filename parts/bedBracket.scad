@@ -13,10 +13,10 @@ module bedBracket()
         }
 
         translate([5, bedBracketDepth, bedBracketHeight - bedBracketThickness-.1])
-            polyhole(d = 3.2, h = bedBracketThickness+.2);
+            hole3mm(h = bedBracketThickness+.2);
 
         translate([bedBracketWidth - 5, bedBracketDepth, bedBracketHeight - bedBracketThickness-.1])
-            polyhole(d = 3.2, h = bedBracketThickness+.2);
+            hole3mm(h = bedBracketThickness+.2);
 
         translate([bedBracketThickness, -.1, 10])
             rotate([-90, 0, 0])

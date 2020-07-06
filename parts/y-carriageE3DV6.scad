@@ -43,12 +43,12 @@ module yCarriageE3DV6() {
             //left screw hole
             translate([5, -.1, 6])
                 rotate([-90, 0, 0])
-                polyhole(d = 3.5, h = baseDepth + .2);
+                hole3mm(h = baseDepth + .2);
 
             //right screw hole
             translate([35, -.1, 6])
                 rotate([-90, 0, 0])
-                polyhole(d = 3.5, h = baseDepth + .2);
+                hole3mm(h = baseDepth + .2);
 
             //left nut hole
             translate([-.1, 4, 3])
@@ -75,12 +75,12 @@ module yCarriageE3DV6Clamp() {
         //left screw hole
         translate([5, -.1, 6])
             rotate([-90, 0, 0])
-                polyhole(d = 3.5, h = baseDepth + .2);
+                hole3mm(h = baseDepth + .2);
 
         //right screw hole
         translate([35, -.1, 6])
             rotate([-90, 0, 0])
-                polyhole(d = 3.5, h = baseDepth + .2);
+                hole3mm(h = baseDepth + .2);
 
         translate([20, 0, -.1])
             yCarriageE3DV6ColdEndInset();

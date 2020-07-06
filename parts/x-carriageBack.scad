@@ -46,22 +46,22 @@ module xCarriageBack() {
                 translate([0, 47.1, 53]) {
                     translate([-6, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 12.2);
+                            hole3mm(h = 12.2);
 
                     translate([28, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 12.2);
+                            polyhole(d = 3.5, h = 12.2);
                 }
 
                 // bearing clamp screw holes bottom
                 translate([0, 47.1, 23]) {
                     translate([-6, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 25.2);
+                            hole3mm(h = 25.2);
 
                     translate([28, 0, 0])
                         rotate([90, 0, 0])
-                        polyhole(d = 3.5, h = 25.2);
+                            hole3mm(h = 25.2);
                 }
 
                 // nut rail  

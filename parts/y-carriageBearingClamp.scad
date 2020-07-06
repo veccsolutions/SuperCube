@@ -45,13 +45,13 @@ module yCarriageBearingBeltClamp() {
 module yCarriageBearingBeltClampHoles() {
     translate([5, 0, 5.5])
         rotate([-90,0,0])
-            polyhole(d = 3.5, h = 100);
+            hole3mm(h = 100);
     translate([5, 0, 19])
         rotate([-90,0,0])
-            polyhole(d = 3.5, h = 100);
+            hole3mm(h = 100);
     translate([5, 0, 32.5])
         rotate([-90,0,0])
-            polyhole(d = 3.5, h = 100);
+            hole3mm(h = 100);
 }
 
 module yCarriageBearingClamp() {
@@ -67,13 +67,13 @@ module yCarriageBearingClamp() {
         cube([yCarriageBearingClampBarrelWidth, yCarriageBearingClampBarrelThickness, 10]);
         translate([5, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth / 2, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth - 5, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
     }
 
     translate([0, 0, 70])
@@ -82,13 +82,13 @@ module yCarriageBearingClamp() {
         cube([yCarriageBearingClampBarrelWidth, yCarriageBearingClampBarrelThickness, 10]);
         translate([5, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth / 2, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth - 5, -.1, 5])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
     }
 
     h = 80 - yCarriageBearingDiameter * 2 - 21;
@@ -98,13 +98,13 @@ module yCarriageBearingClamp() {
         cube([yCarriageBearingClampBarrelWidth, yCarriageBearingClampBarrelThickness, h]);
         translate([5, -.1, h / 2])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth / 2, -.1, h / 2])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
         translate([yCarriageBearingClampBarrelWidth - 5, -.1, h / 2])
             rotate([-90,0,0])
-                polyhole(d = 3.5, h = yCarriageBearingClampBarrelThickness + .2);
+                hole3mm(h = yCarriageBearingClampBarrelThickness + .2);
     }
 
     // belt tensioning
@@ -154,33 +154,33 @@ module yCarriageHoleCutout() {
     // top
     translate([5, 0, yCarriageBearingHeight - 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([20, 0, yCarriageBearingHeight - 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([35, 0, yCarriageBearingHeight - 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
 
     //middle
     translate([5, 0, 40])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([20, 0, 40])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([35, 0, 40])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
 
     //bottom
     translate([5, 0, 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([20, 0, 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
     translate([35, 0, 5])
         rotate([-90, 0, 0])
-            polyhole(d = 3.5, h = 20);
+            hole3mm(h = 20);
 }

@@ -18,28 +18,32 @@ module xCarriageBearingClamp() {
             rotate([-90, 0, 0]) {
                 translate([0, 0, 6.1])
                     polyhole(d = 8, h = 5.1);
-                polyhole(d = 3.5, h = 10.2);
+                    
+                hole3mm(h = 10.2);
             }
 
         translate([39, -.1, 5])
             rotate([-90, 0, 0]) {
                 translate([0, 0, 6.1])
                     polyhole(d = 8, h = 5.1);
-                polyhole(d = 3.5, h = 10.2);
+
+                hole3mm(h = 10.2);
             }
 
         translate([5, -.1, 35])
             rotate([-90, 0, 0]) {
                 translate([0, 0, 6.1])
                     polyhole(d = 8, h = 5.1);
-                polyhole(d = 3.5, h = 10.2);
+
+                hole3mm(h = 10.2);
             }
 
         translate([39, -.1, 35])
             rotate([-90, 0, 0]) {
                 translate([0, 0, 6.1])
                     polyhole(d = 8, h = 5.1);
-                polyhole(d = 3.5, h = 10.2);
+
+                hole3mm(h = 10.2);
             }
     }
 }

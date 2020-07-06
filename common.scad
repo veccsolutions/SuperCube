@@ -10,5 +10,5 @@ module hole5mm(h = 2.2) {
 }
 
 module hole3mm(h = 2.2) {
-    polyhole(d = 3.1, h = h);
+    polyhole(d = 3.5, h = h);
 }
