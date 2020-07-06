@@ -9,13 +9,13 @@ module xRailBracketMotor(motorHeight = 12)
                 cube([2, 20, xRailBracketSizeHeight]);
                 translate([-.1, 10, xRailBracketSizeHeight - 10])
                     rotate([0, 90, 0])
-                        polyhole(d = 5, h = 2.2);
+                        hole5mm(h = 2.2);
             }
       
             difference() {
                 cube([nema17PlateWidth, 20, 2]);
                 translate([nema17PlateWidth - 10, 10, -.1])
-                    polyhole(d = 5, h = 2.2);
+                    hole5mm(h = 2.2);
             }
 
             translate([22, 13, 9])
@@ -30,18 +30,18 @@ module xRailBracketMotor(motorHeight = 12)
                         cube([20+ 2, 2, xRailBracketSizeHeight]);
                         translate([10, -.1, 10])
                             rotate([-90, 0, 0])
-                                polyhole(d = 5, h = 2.2);
+                                hole5mm(h = 2.2);
                         translate([10, -.1, xRailBracketSizeHeight - 10])
                             rotate([-90, 0, 0])
-                                polyhole(d = 5, h = 2.2);
+                                hole5mm(h = 2.2);
                     }
 
                     difference() {
                         cube([20, nema17PlateWidth, 2]);
                         translate([10, 10, -.1])
-                            polyhole(d = 5, h = 2.2);
+                            hole5mm(h = 2.2);
                         translate([10, nema17PlateWidth - 10, -.1])
-                            polyhole(d = 5, h = 2.2);
+                            hole5mm(h = 2.2);
                     }
                 }
             }
@@ -85,23 +85,23 @@ module xRailBracketRight() {
             cube([2, 20, xRailBracketSizeHeight]);
             translate([-.1, 10, xRailBracketSizeHeight - 6])
                 rotate([0, 90, 0])
-                    polyhole(d = 5, h = 2.2);
+                    hole5mm(h = 2.2);
         }
 
         translate([2, 0, 0])
         difference() {
             cube([nema17PlateWidth, 20, 2]);
             translate([nema17PlateWidth - 10, 10, -.1])
-                polyhole(d = 5, h = 2.2);
+                hole5mm(h = 2.2);
         }
     }
     translate([0, 20, 0])
     difference() {
         cube([20, nema17PlateWidth, 2]);
         translate([10, 10, -.1])
-            polyhole(d = 5, h = 2.2);
+            hole5mm(h = 2.2);
         translate([10, nema17PlateWidth - 10, -.1])
-            polyhole(d = 5, h = 2.2);
+            hole5mm(h = 2.2);
     }
 
     translate([0, 20, 0])
@@ -111,11 +111,11 @@ module xRailBracketRight() {
 
         translate([10, -.1, 10])
             rotate([-90, 0, 0])
-                polyhole(d = 5, h = 2.2);
+                hole5mm(h = 2.2);
                 
         translate([10, -.1, xRailBracketSizeHeight -10])
             rotate([-90, 0, 0])
-                polyhole(d = 5, h = 2.2);
+                hole5mm(h = 2.2);
     }
     
     translate([20, 20, 0])

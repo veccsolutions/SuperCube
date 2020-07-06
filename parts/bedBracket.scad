@@ -21,9 +21,9 @@ module bedBracket()
         translate([bedBracketThickness, -.1, 10])
             rotate([-90, 0, 0])
                 hull() {
-                    polyhole(d =  5.2, h = bedBracketThickness+.2);
+                    hole5mm(h = bedBracketThickness + .2);
                     translate([bedBracketWidth - 10, 0, 0])
-                        polyhole(d =  5.2, h = bedBracketThickness+.2);
+                        hole5mm(h = bedBracketThickness + .2);
                 }
     }
 }
