@@ -40,15 +40,15 @@ module zGantryBracketScrewBracket()
         //center
         translate([depth / 2 + 3, depth / 2 - 5, -.1])
         {
-            polyhole(d = 12, h = 3);
+            polyhole(d = 10.5, h = 3);
 
-            translate([-7.5, -7.5, 0])
+            translate([-7.75, 0, 0])
                 hole3mm(h = 3);
-            translate([7.5, -7.5, 0])
+            translate([0, -7.75, 0])
                 hole3mm(h = 3);
-            translate([-7.5, 7.5, 0])
+            translate([7.75, 0, 0])
                 hole3mm(h = 3);
-            translate([7.5, 7.5, 0])
+            translate([0, 7.75, 0])
                 hole3mm(h = 3);
         }
     }
@@ -98,8 +98,6 @@ module zGantryBracket()
     {
         zGantryBracketScrewBracket();
     }
-
-    
 }
 
 module zGantryBracketClamp()
