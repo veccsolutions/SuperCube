@@ -71,7 +71,39 @@ module tenMMBar(l)
     cylinder(d = 10, h = l, $fn = 100);
 }
 
+module pomNutMount(h = 3.5)
+{
+    polyhole(d = 10.5, h = h);
+    pomNutHoles(h = h);
+}
 
+module pomNutHoles(h) {
+    translate([-7.75, 0, 0])
+        hole3mm(h = h);
+    translate([0, -7.75, 0])
+        hole3mm(h = h);
+    translate([7.75, 0, 0])
+        hole3mm(h = h);
+    translate([0, 7.75, 0])
+        hole3mm(h = h);
+}
+
+module pomNut() {
+    difference() {
+        union() {
+            polyhole(d = 10.5, h = 10.5);
+            translate([0, 0, 1.5])
+                polyhole(d = 22, h = 3.5);
+        }
+
+        translate([0, 0, -.1])
+            polyhole(d = (10.5 - (1.8*2)), h = 10.7);
+
+        translate([0, 0, 1.4]) {
+            pomNutHoles(h = 3.7);
+        }
+    }
+}
 
 module bearings12mm()
 {
@@ -85,5 +117,4 @@ module bearings12mm()
         translate([0, 0, -.1])
             polyhole(d = 4, h = 10.2);
     }
-
 }
