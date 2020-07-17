@@ -16,7 +16,7 @@ include <parts/z-GantryBracket.scad>
 include <parts/railClamp.scad>
 
 // positions
-zGantryPosition = 330;
+zGantryPosition = 335;
 carriageYPosition = 300;//printerSizeX / 2;
 carriageXPosition = 300;//printerSizeX / 2;
 
@@ -31,11 +31,13 @@ renderYCarriage = true;
 renderE3DHotEnd = true;
 
 // sizes
-heatBedX = 300;
-heatBedY = 300;
+heatBedX = 310;
+heatBedY = 310;
+heatBedScrewOffset = 35;
 printerSizeX = 500;
 printerSizeY = 500;
 printerSizeZ = 610;
+
 
 bottomHeight = 40;
 secondHeight = bottomHeight + 365 + 40;
@@ -50,14 +52,14 @@ frameExtrusionHorizontalY = printerSizeY - 40;
 yBarLength = printerSizeY - 40 - 40; // -4 for the space for the brackets
 xBarLength = printerSizeX - 40 - 4; // -40 for the brackets
 gantryXExtrusionLength = printerSizeX - 150 - zGantryBracketX;
-gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY);
+gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY) + 5;
 
 zScrewLength = 365;
 zBarLength = zScrewLength + 20 + 20; //20 above for the top bracket and 20 below for the bottom bracket
 
 //overrides here
 
-//zBarLength = 415;
+zBarLength = 415;
 XBarLength = 450;
 
 //end overrides
@@ -239,16 +241,21 @@ module zAxis()
 
 module bedBracketWithScrew(hole = 1)
 {
-    color(printedColor)
-        bedBracket();
 
     if (hole == 1) {
-        translate([5, bedBracketDepth, bedBracketHeight - 10])
-            polyhole(d = 3, h = bedBracketThickness + 15);
+        color(printedColor)
+            translate([0, -20, -bedBracketThickness])
+                bedBracket();
+        translate([13, 17, 0])
+            polyhole(d = 10, h = 27);
     }
     else {
-        translate([bedBracketWidth - 5, bedBracketDepth, bedBracketHeight - 10])
-            polyhole(d = 3, h = bedBracketThickness + 15);
+        color(printedColor)
+            translate([bedBracketWidth, -20, 0])
+            rotate([0,180,0])
+                bedBracket();
+        translate([28.5, 17, 0])
+            polyhole(d = 10, h = 27);
     }
 }
 
@@ -345,17 +352,29 @@ module ZGantry()
 {
     translate([printerSizeX / 2, printerSizeY / 2, 0])
     {
-        translate([-heatBedX / 2, -(heatBedY / 2), 30])
-            cube([heatBedX, heatBedY, 2]);
+        translate([-heatBedX / 2, -(heatBedY / 2), 27])
+        {
+            difference() {
+                cube([heatBedX, heatBedY, 2]);
+                translate([heatBedScrewOffset, heatBedScrewOffset, -.1])
+                    polyhole(d = 4, h = 2.2);
+                translate([heatBedX - heatBedScrewOffset, heatBedScrewOffset, -.1])
+                    polyhole(d = 4, h = 2.2);
+                translate([heatBedScrewOffset, heatBedX - heatBedScrewOffset, -.1])
+                    polyhole(d = 4, h = 2.2);
+                translate([heatBedX - heatBedScrewOffset, heatBedX - heatBedScrewOffset, -.1])
+                    polyhole(d = 4, h = 2.2);
+            }
+        }
 
         color(frameColor)
         {
             translate([-gantryXExtrusionLength / 2, 0, 0])
             {
-                translate([0, -(heatBedY / 2) + bedBracketThickness + bedBracketDepth, 0])
+                translate([0, -(heatBedY / 2) + bedBracketThickness + bedBracketDepth - 2.5, 0])
                     extrusionHorizontalX(l = gantryXExtrusionLength);
                     
-                translate([0, (heatBedY / 2) - (20 + bedBracketThickness + bedBracketDepth), 0])
+                translate([0, (heatBedY / 2) - (20 + bedBracketThickness + bedBracketDepth) + 2.5, 0])
                     extrusionHorizontalX(l = gantryXExtrusionLength);
             }
 
@@ -369,22 +388,22 @@ module ZGantry()
             }
         }
 
-        translate([0, -(heatBedY / 2) + bedBracketThickness + bedBracketDepth, 0])
+        translate([0, -(heatBedY / 2) + bedBracketThickness + bedBracketDepth - 2.5, 0])
         rotate([0, 0, 180])
         {
-            translate([-(heatBedX / 2), 0, 0])
+            translate([-(heatBedX / 2) + heatBedScrewOffset - 13, 0, 0])
                 bedBracketWithScrew();
 
-            translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
+            translate([(heatBedX / 2) - bedBracketWidth - heatBedScrewOffset + 13, 0, 0])
                 bedBracketWithScrew(hole = 2);
         }
 
-        translate([0, (heatBedY / 2) - bedBracketThickness - bedBracketDepth, 0])
+        translate([0, (heatBedY / 2) - bedBracketThickness - bedBracketDepth + 2.5, 0])
         {
-            translate([-(heatBedX / 2), 0, 0])
+            translate([-(heatBedX / 2) + heatBedScrewOffset - 13, 0, 0])
                 bedBracketWithScrew();
 
-            translate([(heatBedX / 2) - bedBracketWidth, 0, 0])
+            translate([(heatBedX / 2) - bedBracketWidth - heatBedScrewOffset + 13, 0, 0])
                 bedBracketWithScrew(hole = 2);
         }
 

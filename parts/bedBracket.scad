@@ -1,29 +1,23 @@
-bedBracketWidth = 40;
-bedBracketHeight = 22;
+bedBracketWidth = 42;
 bedBracketThickness = 5;
-bedBracketDepth = 20;
+bedBracketDepth = 50;
 
 module bedBracket()
 {
     difference() {
-        union() {
-            cube([bedBracketWidth, bedBracketThickness, bedBracketHeight]);
-            translate([0, bedBracketThickness, 22 - bedBracketThickness])
-                cube([bedBracketWidth, bedBracketDepth, bedBracketThickness]);
-        }
+        cube([bedBracketWidth, bedBracketDepth, bedBracketThickness]);
 
-        translate([5, bedBracketDepth, bedBracketHeight - bedBracketThickness-.1])
-            hole3mm(h = bedBracketThickness+.2);
+        translate([bedBracketWidth - 15, 20, -.1])
+            cube([bedBracketWidth / 2 + .1, 30.1, bedBracketThickness + .2]);
 
-        translate([bedBracketWidth - 5, bedBracketDepth, bedBracketHeight - bedBracketThickness-.1])
-            hole3mm(h = bedBracketThickness+.2);
-
-        translate([bedBracketThickness, -.1, 10])
-            rotate([-90, 0, 0])
-                hull() {
+        translate([bedBracketWidth / 2 - 12.5, 10, -.1])
+            hull() {
+                hole5mm(h = bedBracketThickness + .2);
+                translate([25, 0, 0])
                     hole5mm(h = bedBracketThickness + .2);
-                    translate([bedBracketWidth - 10, 0, 0])
-                        hole5mm(h = bedBracketThickness + .2);
-                }
+            }
+
+        translate([(bedBracketWidth - 15) / 2, 37, -.1])
+            pomNutHoles(h = bedBracketThickness + .2);
     }
 }
