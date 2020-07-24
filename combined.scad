@@ -211,7 +211,7 @@ module zAxis()
 
     translate([10, 20, 0])
     {
-        translate([0, 0, zGantryPosition])
+        translate([0, 0, zGantryPosition - 1])
             color(bearingColor)
             lmu10();
 
@@ -219,7 +219,7 @@ module zAxis()
             tenMMBar(l = zBarLength);
     }
 
-    translate([zBottomWidth - 10, 20, 0])
+    translate([zBottomWidth - 10, 20, -1])
     {
         translate([0, 0, zGantryPosition])
             color(bearingColor)
@@ -241,7 +241,6 @@ module zAxis()
 
 module bedBracketWithScrew(hole = 1)
 {
-
     if (hole == 1) {
         color(printedColor)
             translate([0, -20, -bedBracketThickness])
@@ -264,7 +263,7 @@ module combinedGantryBracket()
     color(printedColor)
         zGantryBracket();
     
-    translate([zGantryBracketX, (zGantryBracketY - zGantryBracketBase) / 2, 0])
+    translate([zGantryBracketX + 1, (zGantryBracketY - zGantryBracketBase) / 2, 0])
     {
         color(printedColor1)
         zGantryBracketClamp();

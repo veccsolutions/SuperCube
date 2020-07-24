@@ -32,7 +32,6 @@ module zGantryBracketScrewBracket()
 {
     depth = zGantryBracketX +  19 / 2;
 
-    translate([0,0, 18])
     difference()
     {
         cube([depth,30,2]);
@@ -42,13 +41,15 @@ module zGantryBracketScrewBracket()
             pomNutMount();
     }
 
-    translate([0, 2, 20])
-        rotate([180,0,90])
-            triangle(out = depth, up = 20, thick = 2);
+    translate([0, 2, 2])
+        mirror([0,0,1])
+        rotate([0, 180, -90])
+            triangle(out = depth, up = 18, thick = 2);
 
-    translate([0, 30, 20])
-        rotate([180,0,90])
-            triangle(out = depth, up = 20, thick = 2);
+    translate([0, 30, 2])
+        mirror([0,0,1])
+        rotate([0, 180, -90])
+            triangle(out = depth, up = 18, thick = 2);
 }
 
 
@@ -91,13 +92,13 @@ module zGantryBracket()
 
 module zGantryBracketClamp()
 {
-    width = 19 / 2 + 2;
-            
+    width = 19 / 2 + 1;
+
     difference()
     {
         cube([width, zGantryBracketBaseWidth, 20]);
 
-        translate([0, zGantryBracketBaseWidth / 2, -.5])
+        translate([-1, zGantryBracketBaseWidth / 2, -.5])
             lmu10();
 
         translate([-.1, 5, 10])
