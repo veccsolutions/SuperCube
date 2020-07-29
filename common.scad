@@ -6,7 +6,7 @@ include <parts/lmu10.scad>
 zGantryBracketX = 20;
 
 module hole5mm(h = 2.2) {
-    polyhole(d = 5.2, h = h);
+    polyhole(d = 5.5, h = h);
 }
 
 module hole3mm(h = 2.2) {
