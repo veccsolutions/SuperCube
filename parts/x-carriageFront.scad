@@ -69,12 +69,12 @@ module xCarriageFront() {
                     cube([50, 4, 8]); //8
             }
 
-            translate([-4, 50, -7]) //12
+            translate([-3.5, 50, -7]) //12
                 mirror([0, 1, 0])
                     rotate([-90, 0, 0])
                         railClamp(l = 30, h = -1);
 
-            translate([-4, 50, 37])
+            translate([-3.5, 50, 37])
                 rotate([90,0, 0])
                     railClamp(l = 40, h = -1);
         }

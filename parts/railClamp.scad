@@ -5,11 +5,11 @@ module railClamp(l = 20, d = 10, h = 10)
     difference(){        
         union()
         {
-            translate([-7, -7, 0])
-                cube([14, 12 + h, l]);
+            translate([-7.5, -7, 0])
+                cube([15, 12 + h, l]);
 
             translate([0, 5 + h, 0])
-                cylinder(d = 14, h = l + 0, $fn=100);
+                cylinder(d = 15, h = l + 0, $fn=100);
         }
 
         translate([0, h - 1, -1])
@@ -28,13 +28,13 @@ module railClamp(l = 20, d = 10, h = 10)
 
         //screw insets
         translate([-8, h + 5, 2])
-            cube([5, 6, 6]);
+            cube([5, 8, 6]);
         translate([-8, h + 5, 15 - 3])
-            cube([5, 6, 6]);
+            cube([5, 8, 6]);
 
         translate([3, h + 5, 2])
-            cube([5, 6, 6]);
+            cube([5, 8, 6]);
         translate([3, h + 5, 15 - 3])
-            cube([5, 6, 6]);
+            cube([5, 8, 6]);
     }
 }

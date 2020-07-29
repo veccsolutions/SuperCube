@@ -74,7 +74,7 @@ module xRailBracketBackLeft()
 
 module xRailBracketRight() {
     pulleyHeight = 11.2;
-    blockHeight = 2 * 3 + pulleyHeight * 2;
+        blockHeight = 2 * 3 + pulleyHeight * 2;
 
     translate([20, 0, 0]) {
         translate([2, 13, 9])
@@ -121,7 +121,6 @@ module xRailBracketRight() {
     translate([20, 20, 0])
     difference()
     {
-
         cube([nema17PlateWidth / 2 + 6, nema17PlateWidth / 2 + 10, blockHeight]);
         translate([2, 8, 2.2]) {
             translate([0, 0, 0])
@@ -131,7 +130,7 @@ module xRailBracketRight() {
         }
 
         translate([15, nema17PlateWidth / 2, -.1])
-            polyhole(d = 4.2, h = 30);
+            polyhole(d = 5.5, h = 30);
     }
 
     translate([nema17PlateWidth / 2 + 18, nema17PlateWidth / 2 + 28, 0])
