@@ -4,6 +4,8 @@ include <parts/nema17MotorPlate.scad>
 include <parts/lmu10.scad>
 
 zGantryBracketX = 20;
+lmu10Diameter = 20;
+lmu10Length = 29;
 
 module hole5mm(h = 2.2) {
     polyhole(d = 5.5, h = h);

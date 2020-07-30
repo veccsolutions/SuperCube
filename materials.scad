@@ -68,7 +68,7 @@ module extrusionHorizontalX(x = 20, y = 20, l)
 
 module tenMMBar(l)
 {
-    cylinder(d = 10, h = l, $fn = 100);
+    cylinder(d = 10.5, h = l, $fn = 100);
 }
 
 module pomNutMount(h = 3.5)
