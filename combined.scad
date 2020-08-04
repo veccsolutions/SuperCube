@@ -14,21 +14,22 @@ include <parts/z-top.scad>
 include <parts/z-bottom.scad>
 include <parts/z-GantryBracket.scad>
 include <parts/railClamp.scad>
+include <parts/blowerFan.scad>
 
 // positions
 zGantryPosition = 335;
-carriageYPosition = 300;//printerSizeX / 2;
-carriageXPosition = 300;//printerSizeX / 2;
+carriageYPosition = 100;//printerSizeX / 2;
+carriageXPosition = 0;//printerSizeX / 2;
 
 // render options
-renderFrame = true;
+renderFrame = false;
 renderBelts = true;
-renderZAxis = true;
-renderZGantry = true;
+renderZAxis = false;
+renderZGantry = false;
 renderYAxis = true;
 renderXAxis = true;
-renderYCarriage = true;
-renderE3DHotEnd = true;
+renderYCarriage = false;
+renderE3DHotEnd = false;
 
 // sizes
 heatBedX = 310;
@@ -49,7 +50,7 @@ beltColor = [.52, .36, .23];
 purpleColor = [.64, .12, .94];
 frameExtrusionHorizontalX = printerSizeX - 40;
 frameExtrusionHorizontalY = printerSizeY - 40;
-yBarLength = printerSizeY - 40 - 40; // -4 for the space for the brackets
+yBarLength = printerSizeY - 50; // -4 for the space for the brackets
 xBarLength = printerSizeX - 40 - 4; // -40 for the brackets
 gantryXExtrusionLength = printerSizeX - 150 - zGantryBracketX;
 gantryYExtrusionLength = max(heatBedY - (bedBracketDepth + bedBracketThickness) * 2, zGantryBracketY) + 5;
@@ -65,7 +66,7 @@ XBarLength = 450;
 //end overrides
 
 zBarOffset = zBarLength - zScrewLength - 20;
-actualcarriageXPosition = carriageXPosition + 105;
+actualcarriageXPosition = carriageXPosition + 115;
 actualcarriageYPosition = carriageYPosition + 120;
 
 echo("PARTS: 2x 10mm Steel Bar", xBarLength, "X");
@@ -285,16 +286,16 @@ module combinedXBarFront()
         xRailBracketFrontRight();
 
     color(printedColor)
-    translate([actualcarriageXPosition + 4.5, 10, 0])
+    translate([actualcarriageXPosition + 5.5, 10, 0])
         xCarriageFront();
 
     color(printedColor1)
-    translate([actualcarriageXPosition - 6.5, 13, 58])
+    translate([actualcarriageXPosition - 5.5, 13, 58])
         rotate([180,0,0])
         xCarriageBearingClamp();
 
     color(bearingColor)
-    translate([actualcarriageXPosition, 13, 38])
+    translate([actualcarriageXPosition + 7.5, 13, 38])
         rotate([0,90,0])
         lmu10();
 
@@ -323,7 +324,8 @@ module combinedXBarBack()
         xRailBracketBackRight();
 
     color(printedColor)
-    translate([actualcarriageXPosition + 4.5, -60, 0])
+    translate([actualcarriageXPosition + 41.5, -10, 0])
+        rotate([0, 0, 180])
         xCarriageBack();
 
     color(printedColor1)
@@ -551,13 +553,13 @@ if (renderBelts)
     Belts();
 
 if (renderYAxis)
-    translate([actualcarriageXPosition, printerSizeY / 2 - yBarLength / 2, 480]) {
-        translate([0, 0, 40])
-            rotate([-90,0,0])
-            tenMMBar(l = yBarLength);
+    translate([actualcarriageXPosition + 23.5, printerSizeY / 2 - yBarLength / 2, 479]) {
+        translate([0, 0, 44])
+            rotate([-90, 0, 0])
+                tenMMBar(l = yBarLength);
 
-        rotate([-90,0,0])
-        tenMMBar(l = yBarLength);
+        rotate([-90, 0, 0])
+            tenMMBar(l = yBarLength);
     }
 
 if (renderYCarriage) {
@@ -565,26 +567,28 @@ if (renderYCarriage) {
         translate([-15, -40, 35])
             rotate([0,0,90])
                 yCarriageE3DV6Clamp();
+                
         rotate([0,0,-90])
         {
-            yCarriageE3DV6();
-
             color(bearingColor)
-            translate([5.5, 12, 20])
+            translate([5.5, 12.5, 20])
                 rotate([0, 90, 0])
                     lmu10();
 
             color(bearingColor)
-            translate([5.6, 12, 60])
+            translate([5.5, 12.5, 60])
                 rotate([0, 90, 0])
                     lmu10();
 
+            color(printedColor)
             translate([0, 5, 0])
                 yCarriageBearingClamp();
 
             translate([30,35.5,20])
                 yCarriageBearingBeltClamp();
         
+            translate([0, -16, 0]) {
+                yCarriageE3DV6();
                 
             if (renderE3DHotEnd) {
                 translate([20, -15, 50])
@@ -604,13 +608,14 @@ if (renderYCarriage) {
                         rotate([0,0,90])
                         cube([30, 10, 30]);
 
-                    //part fan
-                    color([.4,.4,.4])
-                    translate([-25, 35, -60])
-                        rotate([30, 0, 0])
-                        cube([50, 50, 15]);
+
                 }
-            }
+            }}
+            //part fan
+            color([.4,.4,.4])
+            translate([5, 5, 100])
+                rotate([90, 0, 0])
+                blowerFan();
         }
     }
 }
