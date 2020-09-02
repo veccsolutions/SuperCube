@@ -3,8 +3,8 @@ module MotorMount(motorHeight = 12)
     difference() {
         union() {
             difference() {
-                cube([2, 20, xRailBracketSizeHeight]);
-                translate([-.1, 10, xRailBracketSizeHeight - 10])
+                cube([2, 20, yRailBracketSizeHeight]);
+                translate([-.1, 10, yRailBracketSizeHeight - 10])
                     rotate([0, 90, 0])
                         hole5mm(h = 2.2);
             }
@@ -24,11 +24,11 @@ module MotorMount(motorHeight = 12)
             {
                 union() {
                     difference() {
-                        cube([20+ 2, 2, xRailBracketSizeHeight]);
+                        cube([20+ 2, 2, yRailBracketSizeHeight]);
                         translate([10, -.1, 10])
                             rotate([-90, 0, 0])
                                 hole5mm(h = 2.2);
-                        translate([10, -.1, xRailBracketSizeHeight - 10])
+                        translate([10, -.1, yRailBracketSizeHeight - 10])
                             rotate([-90, 0, 0])
                                 hole5mm(h = 2.2);
                     }
@@ -42,7 +42,6 @@ module MotorMount(motorHeight = 12)
                     }
                 }
             }
-
 
             if (motorHeight > 0) {
                 translate([0, 18, 0])

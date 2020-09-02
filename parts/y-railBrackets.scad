@@ -10,8 +10,8 @@ module yRailBracket() {
                 railClamp(h=30);
 
        difference() {
-            cube([2, 20, xRailBracketSizeHeight]);
-            translate([-.1, 10, xRailBracketSizeHeight - 6])
+            cube([2, 20, yRailBracketSizeHeight]);
+            translate([-.1, 10, yRailBracketSizeHeight - 6])
                 rotate([0, 90, 0])
                     hole5mm(h = 2.2);
         }
@@ -35,13 +35,13 @@ module yRailBracket() {
     translate([0, 20, 0])
     difference()
     {
-        cube([22, 2, xRailBracketSizeHeight]);
+        cube([22, 2, yRailBracketSizeHeight]);
 
         translate([10, -.1, 10])
             rotate([-90, 0, 0])
                 hole5mm(h = 2.2);
                 
-        translate([10, -.1, xRailBracketSizeHeight -10])
+        translate([10, -.1, yRailBracketSizeHeight -10])
             rotate([-90, 0, 0])
                 hole5mm(h = 2.2);
     }
