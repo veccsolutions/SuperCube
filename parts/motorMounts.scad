@@ -54,7 +54,7 @@ module MotorMount(motorHeight = 12)
                 nema17MotorPlate(h = 2);
         }
         translate([0, 20, -.1])
-            cube([2.1, 2.1, motorHeight + .1]);
+            cube([nema17PlateWidth, nema17PlateWidth, motorHeight + .1]);
     }
 }
 
