@@ -1,0 +1,21 @@
+include <../common.scad>
+include <../parts/bedBracket.scad>
+include <../parts/e3dv6.scad>
+include <../parts/motorMounts.scad>
+include <../parts/nema17motor.scad>
+include <../parts/x-carriageBearingClamp.scad>
+include <../parts/y-railBrackets.scad>
+include <../parts/y-carriageLeft.scad>
+include <../parts/y-carriageRight.scad>
+include <../parts/x-carriage.scad>
+include <../parts/x-carriageE3DV6.scad>
+include <../parts/z-top.scad>
+include <../parts/z-bottom.scad>
+include <../parts/z-GantryBracket.scad>
+include <../parts/railClamp.scad>
+include <../parts/blowerFan.scad>
+
+include <./frame.scad>
+include <./zAxis.scad>
+include <./gantry.scad>
+include <./motion.scad>
