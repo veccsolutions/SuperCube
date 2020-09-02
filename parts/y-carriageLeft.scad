@@ -1,4 +1,4 @@
-module xCarriageBack() {
+module yCarriageLeft() {
     
     // main block
     difference() {
@@ -38,7 +38,7 @@ module xCarriageBack() {
             cube([29, 40.2, 12]);
         
         // top bearing screw
-        translate([24.5, 43.125, 13.9])
+        translate([24.5, 44.125, 13.9])
             polyhole(d = 5.5, h = 16.2);
 
         // bearing clamp screw hole top left

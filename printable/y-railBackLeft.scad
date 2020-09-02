@@ -1,7 +1,7 @@
 include <../common.scad>
 include <../parts/railClamp.scad>
-include <../parts/x-RailBrackets.scad>
+include <../parts/y-RailBrackets.scad>
 
 echo("With Supports: no");
 
-xRailBracketFrontLeft();
+yRailBracketLeft();

@@ -1,4 +1,4 @@
-module yCarriageE3DV6WireBracket() {
+module xCarriageE3DV6WireBracket() {
     rotate([0,90,0])
         difference() {
             union() {
@@ -11,27 +11,27 @@ module yCarriageE3DV6WireBracket() {
         }
 }
 
-module yCarriageE3DV6ColdEndInset() {
+module xCarriageE3DV6ColdEndInset() {
     polyhole(d = 12.1, h = 15.2);
     polyhole(d = 16.1, h = 2.5);
     translate([0, 0, 12.1 - 4.01])
         polyhole(d = 16.1, h = 4.2);
 }
 
-module yCarriageE3DV6() {
+module xCarriageE3DV6() {
     baseDepth = 15;
 
     //carriage mount
     difference() {
         union() {
-            cube([40, 5, yCarriageBearingHeight]);
-            translate([10, -5, yCarriageBearingHeight - 5])
-                yCarriageE3DV6WireBracket();
-            translate([25, -5, yCarriageBearingHeight - 5])
-                yCarriageE3DV6WireBracket();        }
+            cube([40, 5, xCarriageBearingHeight]);
+            translate([10, -5, xCarriageBearingHeight - 5])
+                xCarriageE3DV6WireBracket();
+            translate([25, -5, xCarriageBearingHeight - 5])
+                xCarriageE3DV6WireBracket();        }
 
         translate([0, -.1, 0])
-            yCarriageHoleCutout();
+            xCarriageHoleCutout();
     }
 
 
@@ -59,11 +59,11 @@ module yCarriageE3DV6() {
                 cube([10.1, 3, 6]);
 
             translate([20, 0, -.1])
-                yCarriageE3DV6ColdEndInset();
+                xCarriageE3DV6ColdEndInset();
         }
 }
 
-module yCarriageE3DV6Clamp() {
+module xCarriageE3DV6Clamp() {
     difference() {
         baseDepth = 15;
         union() {
@@ -83,7 +83,7 @@ module yCarriageE3DV6Clamp() {
                 hole3mm(h = baseDepth + .2);
 
         translate([20, 0, -.1])
-            yCarriageE3DV6ColdEndInset();
+            xCarriageE3DV6ColdEndInset();
 
         translate([-.1, -12, -.1])
             cube([40.2, 12, 15.2]);

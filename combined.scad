@@ -1,14 +1,15 @@
 include <common.scad>
 include <parts/bedBracket.scad>
 include <parts/e3dv6.scad>
+include <parts/motorMounts.scad>
 include <parts/nema17motor.scad>
 include <parts/x-carriageBearingClamp.scad>
-include <parts/x-RailBrackets.scad>
-include <parts/x-carriageFront.scad>
-include <parts/x-carriageBack.scad>
+include <parts/y-railBrackets.scad>
+include <parts/y-carriageLeft.scad>
+include <parts/y-carriageRight.scad>
 
-include <parts/y-carriageBearingClamp.scad>
-include <parts/y-carriageE3DV6.scad>
+include <parts/x-carriage.scad>
+include <parts/x-carriageE3DV6.scad>
 
 include <parts/z-top.scad>
 include <parts/z-bottom.scad>
@@ -18,18 +19,18 @@ include <parts/blowerFan.scad>
 
 // positions
 zGantryPosition = 335;
-carriageYPosition = 100;//printerSizeX / 2;
-carriageXPosition = 0;//printerSizeX / 2;
+carriageYPosition = 300; //printerSizeX / 2;
+carriageXPosition = 100; //printerSizeX / 2;
 
 // render options
-renderFrame = false;
+renderFrame = true;
 renderBelts = true;
-renderZAxis = false;
-renderZGantry = false;
-renderYAxis = true;
+renderZAxis = true;
+renderZGantry = true;
 renderXAxis = true;
-renderYCarriage = false;
-renderE3DHotEnd = false;
+renderYAxis = true;
+renderXCarriage = true;
+renderE3DHotEnd = true;
 
 // sizes
 heatBedX = 310;
@@ -38,7 +39,6 @@ heatBedScrewOffset = 35;
 printerSizeX = 500;
 printerSizeY = 500;
 printerSizeZ = 610;
-
 
 bottomHeight = 40;
 secondHeight = bottomHeight + 365 + 40;
@@ -66,13 +66,13 @@ XBarLength = 450;
 //end overrides
 
 zBarOffset = zBarLength - zScrewLength - 20;
-actualcarriageXPosition = carriageXPosition + 115;
-actualcarriageYPosition = carriageYPosition + 120;
+actualCarriageXPosition = carriageXPosition + 115;
+actualCarriageYPosition = carriageYPosition + 110;
 
 echo("PARTS: 2x 10mm Steel Bar", xBarLength, "X");
 echo("PARTS: 2x 10mm Steel Bar", yBarLength, "Y");
 echo("PARTS: 4x 10mm Steel Bar: ", zBarLength, "Z");
-echo("PARTS: 2x  20x20 Extrusion: ", gantryXExtrusionLength, "gantry - x");
+echo("PARTS: 2x  20x20 Extrusion: ", gantryXExtrusionLength, "gantry - X");
 echo("PARTS: 2x  20x20 Extrusion: ", gantryYExtrusionLength, "gantry - Y");
 echo("PARTS: 8x  20x20 Extrusion: ", frameExtrusionHorizontalX, " frame - X");
 echo("PARTS: 8x  20x40 Extrusion: ", frameExtrusionHorizontalY, " frame - Y");
@@ -105,8 +105,6 @@ echo("PARTS: 96x M5x8mm screws - frame corners");
     //right x rail - 12
 echo("PARTS: 44x M5x10mm screws - plastic to frame");
 echo("PARTS: 156x M5 T-Nuts for 20x20 extrusion");
-
-
 echo("PARTS: Z-SCREW Length: ", zScrewLength);
 echo("PARTS: 2x Z-Motors");
 echo("PARTS: 2x XY-Motors");
@@ -128,8 +126,6 @@ echo("PRINT: 2x printables/z-gantryBracket.scad");
 echo("PRINT: 4x printables/z-gantryBracketClamp.scad");
 echo("PRINT: 2x printables/z-top.scad");
 echo("PRINT: 4x printables/bedBracket.scad");
-
-
 echo("MEASUREMENTS: Top 40x20", zScrewLength);
 echo("MEASUREMENTS: Bottom 40x20", bottomHeight);
 
@@ -275,35 +271,39 @@ module combinedGantryBracket()
     }
 }
 
-module combinedXBarFront()
+module combinedYBarRight()
 {
     color(printedColor)
-    translate([20, 0, 0])
-        xRailBracketFrontLeft();
+    translate([printerSizeX, 20, 0])
+        rotate([0, 0, 90])
+            MotorMountRight();
+            
+    color(printedColor)
+    translate([printerSizeX, printerSizeY, 0])
+        rotate([0, 0, 90])
+         yRailBracketRight();
 
     color(printedColor)
-    translate([printerSizeX, 0, 0])
-        xRailBracketFrontRight();
+    translate([printerSizeX - 10, actualCarriageYPosition + 6, 0])
+        rotate([0, 0, 90])
+        yCarriageRight();
 
-    color(printedColor)
-    translate([actualcarriageXPosition + 5.5, 10, 0])
-        xCarriageFront();
-
-    color(printedColor1)
-    translate([actualcarriageXPosition - 5.5, 13, 58])
-        rotate([180,0,0])
-        xCarriageBearingClamp();
+    // TODO: Fix the YCarriage Clamp
+    // color(printedColor1)
+    // translate([printerSizeX - 10, actualCarriageYPosition + 44, 18])
+    //     rotate([0,0,-90])
+    //     xCarriageBearingClamp();
 
     color(bearingColor)
-    translate([actualcarriageXPosition + 7.5, 13, 38])
-        rotate([0,90,0])
+    translate([printerSizeX - 13, actualCarriageYPosition + 7.5, 38])
+        rotate([-90,0,0])
         lmu10();
 
-    translate([printerSizeX / 2 - xBarLength / 2, 13, 38])
-        rotate([0,90,0])
-        tenMMBar(l = xBarLength);
+    translate([printerSizeX - 13, 22, 38])
+        rotate([-90,0,0])
+        tenMMBar(l = yBarLength);
 
-    translate([20, 20, -45]) {
+    translate([printerSizeX - 20 - nema17PlateWidth, 20, -45]) {
         nema17motor();
 
         translate([nema17PlateWidth / 2, nema17PlateWidth / 2, 48])
@@ -311,37 +311,40 @@ module combinedXBarFront()
     }
 }
 
-module combinedXBarBack()
+module combinedYBarLeft()
 {
     color(printedColor)
-    translate([20, 0, 0]) {
-        // rotate([0, 0, -90])
-        xRailBracketBackLeft();
+    translate([0, 20, 0]) {
+        rotate([0, 0, 90])
+            MotorMountLeft();
     }
 
     color(printedColor)
-    translate([printerSizeX, 0, 0])
-        xRailBracketBackRight();
+    translate([0, printerSizeY, 0])
+        rotate([0, 0, 90])
+            yRailBracketLeft();
 
     color(printedColor)
-    translate([actualcarriageXPosition + 41.5, -10, 0])
-        rotate([0, 0, 180])
-        xCarriageBack();
+    translate([10, actualCarriageYPosition + 42, 0])
+        rotate([0, 0, -90])
+            yCarriageLeft();
 
-    color(printedColor1)
-    translate([actualcarriageXPosition - 6.5, -13, 18])
-        xCarriageBearingClamp();
+    //TODO: fix the yCarriageBearingClamp
+    // color(printedColor1)
+    // translate([13, actualCarriageYPosition - 6.5, 18])
+    //     rotate([0, 0, 90])
+    //     xCarriageBearingClamp();
 
     color(bearingColor)
-    translate([actualcarriageXPosition, -13, 38])
-        rotate([0,90,0])
+    translate([13, actualCarriageYPosition + 11, 38])
+        rotate([-90, 0, 0])
         lmu10();
 
-    translate([printerSizeX / 2 - xBarLength / 2, -13, 38])
-        rotate([0,90,0])
+    translate([13, 22, 38])
+        rotate([-90, 0, 0])
         tenMMBar(l = xBarLength);
 
-    translate([20, -nema17PlateWidth - 20, -45 + 13]) {
+    translate([20, 20, -45 + 13]) {
         nema17motor();
 
         translate([nema17PlateWidth / 2, nema17PlateWidth / 2, 48])
@@ -423,102 +426,99 @@ module ZGantry()
 
 module Belts() {
     motorX = 20 + nema17PlateWidth / 2;
-    backMotorY = printerSizeY - 20 - nema17PlateWidth / 2;
-    frontMotorY = 20 + nema17PlateWidth / 2;
-    pulleyX = printerSizeX - 35;
-    pulleyFrontY = 20 + nema17PlateWidth / 2;
-    pulleyBackY = printerSizeY - 35;
-    pulleyBottomZ = 490;
-    pulleyTopZ = pulleyBottomZ + 12;
-    rightBeltLength = pulleyBackY - pulleyFrontY + 6;
-    
+    rightMotorX = printerSizeY - 20 - nema17PlateWidth / 2;
+    leftMotorX = 20 + nema17PlateWidth / 2;
+    backPulleyY = printerSizeX - 35 - 20;
+    backBeltLength = printerSizeY - 40 - 30;
+
     // bottom belt
-    translate([0,0,490]) {
+    translate([0, 20, 490]) {
         // stationary idlers
-        translate([pulleyX, frontMotorY, -2])
+        translate([leftMotorX, backPulleyY, -2])
             bearings12mm();
-        translate([pulleyX, backMotorY, -2])
+        translate([rightMotorX, backPulleyY, -2])
             bearings12mm();
 
         // carriage idlers
-        translate([actualcarriageXPosition + 17, frontMotorY + 13, -2]) //front
+        translate([leftMotorX, actualCarriageYPosition + 10.5, -2]) //left
             bearings12mm();
-        translate([actualcarriageXPosition + 30, backMotorY, -2]) //back
+        translate([rightMotorX - 13, actualCarriageYPosition - 2, -2]) //right
             bearings12mm();
 
         color(beltColor) {
-            // front motor turn
-            translate([motorX - 6 - 1, frontMotorY - 6, 0])
-                cube([1, 13, 6]);
+            // right motor turn
+            translate([rightMotorX - 7, nema17PlateWidth / 2 - 7, 0])
+                cube([13, 1, 6]);
 
-            // x front inner
-            translate([motorX - 6, frontMotorY + 6, 0])
-                cube([actualcarriageXPosition - 12, 1, 6]);
-                
-            // x front outer
-            translate([motorX - 6 - 1, frontMotorY - 6, 0])
-                cube([printerSizeX - 20 - nema17PlateWidth, 1, 6]);
+            // inner right
+            translate([rightMotorX - 7, nema17PlateWidth / 2 - 7, 0])
+                cube([1, actualCarriageYPosition - 10, 6]);
 
-            // y long
-            translate([pulleyX + 6, pulleyFrontY - 6, 0])
-                cube([1, rightBeltLength, 6]);
+            // outer right
+            translate([rightMotorX + 6, nema17PlateWidth / 2 - 7, 0])
+                cube([1, printerSizeY - 20 - nema17PlateWidth, 6]);
 
-            // x back
-            translate([actualcarriageXPosition + 23, pulleyBackY, 0])
-                cube([pulleyX - (actualcarriageXPosition + 23) + 6, 1, 6]);
+            // back
+            translate([leftMotorX - 6, backPulleyY + 6, 0])
+                cube([backBeltLength, 1, 6]);
 
-            // y back
-            translate([actualcarriageXPosition + 23, actualcarriageYPosition, 0]) // end: backMotorY + 6
-                cube([1, (backMotorY + 6) - actualcarriageYPosition, 6]);
+            // left
+            translate([leftMotorX - 7, actualCarriageYPosition + 4, 0]) {
+                // side
+                cube([1, printerSizeY - actualCarriageYPosition - 52, 6]);
+                // x
+                cube([actualCarriageXPosition, 1, 6]); // TODO: adjust for x carriage position offset
+            }
 
-            // y front
-            translate([actualcarriageXPosition + 23, frontMotorY + 6, 0]) // end: backMotorY + 6
-                cube([1, actualcarriageYPosition - 40 - frontMotorY - 6, 6]);
+            // right x
+            translate([actualCarriageXPosition + 80, actualCarriageYPosition + 4, 0]) // end: rightMotorX + 6
+                cube([printerSizeX - actualCarriageXPosition - 80 - 20 - nema17PlateWidth / 2 - 7 + 1, 1, 6]);
+                //x = offset from translate - extrusion - bearing position + belt width
         }
     }
 
     //top belt
-    translate([0,0,503]) {
+    translate([0, 20, 503]) {
         // stationary idlers
-        translate([pulleyX, frontMotorY, -2]) //front
+        translate([leftMotorX, backPulleyY, -2]) //front
             bearings12mm();
-        translate([pulleyX, backMotorY, -2]) //back
+        translate([rightMotorX, backPulleyY, -2]) //back
             bearings12mm();
 
         // carriage idlers
-        translate([actualcarriageXPosition + 30, frontMotorY + 1, -2]) //front
+        translate([leftMotorX + 13, actualCarriageYPosition - 2.5, -2]) // left
             bearings12mm();
-        translate([actualcarriageXPosition + 17, backMotorY - 12, -2]) // back
+        translate([rightMotorX, actualCarriageYPosition + 11, -2]) // right
             bearings12mm();
 
         color(beltColor) {
-            // back motor turn
-            translate([motorX - 6 - 1, backMotorY - 6, 0])
-                cube([1, 13, 6]);
+            // left motor turn
+            translate([leftMotorX - 7, nema17PlateWidth / 2 - 7, 0])
+                cube([13, 1, 6]);
 
-            // x front
-            translate([actualcarriageXPosition + 23, pulleyFrontY - 6, 0])
-                cube([pulleyX - (actualcarriageXPosition + 23) + 6, 1, 6]);
-            
-            // y long
-            translate([pulleyX + 6, pulleyFrontY - 6, 0])
-                cube([1, rightBeltLength, 6]);
+            // inner left
+            translate([leftMotorX + 6, nema17PlateWidth / 2 - 7, 0])
+                cube([1, actualCarriageYPosition - 10, 6]);
 
-            // x back inner
-            translate([motorX - 6, backMotorY - 6, 0])
-                cube([actualcarriageXPosition - 12, 1, 6]);
-            
-            // x back outer
-            translate([motorX - 6 - 1, backMotorY + 6, 0])
-                cube([printerSizeX - 20 - nema17PlateWidth, 1, 6]);
+            // outer left
+            translate([leftMotorX - 7, nema17PlateWidth / 2 - 7, 0])
+                cube([1, printerSizeY - 20 - nema17PlateWidth, 6]);
 
-            // y back
-            translate([actualcarriageXPosition + 23, actualcarriageYPosition, 0]) // end: backMotorY + 6
-                cube([1, backMotorY - actualcarriageYPosition - 5, 6]);
+            // back
+            translate([leftMotorX - 6, backPulleyY + 6, 0])
+                cube([backBeltLength, 1, 6]);
 
-            // y front
-            translate([actualcarriageXPosition + 23, frontMotorY - 6, 0]) // end: backMotorY + 6
-                cube([1, actualcarriageYPosition - 40 - frontMotorY + 6, 6]);
+            // right side
+            translate([rightMotorX + 6, actualCarriageYPosition + 4, 0])
+                cube([1, printerSizeY - actualCarriageYPosition - 52, 6]);
+
+            // left x
+            translate([leftMotorX + 6, actualCarriageYPosition + 4, 0]) // end: rightMotorX + 6
+                cube([actualCarriageXPosition - 13, 1, 6]);
+
+            // right x
+            translate([actualCarriageXPosition + 80, actualCarriageYPosition + 4, 0]) // end: rightMotorX + 6
+                cube([printerSizeX - actualCarriageXPosition - 80 - 20 - nema17PlateWidth / 2 + 7, 1, 6]);
         }
     }
 }
@@ -541,34 +541,34 @@ if (renderZGantry)
     translate([0, 0, bottomHeight + 40 + zGantryPosition])
         ZGantry();
 
-if (renderXAxis) {
+if (renderYAxis) {
     translate([0, 0, secondHeight + 40])
-        combinedXBarFront();
+        combinedYBarRight();
 
-    translate([0, printerSizeY, secondHeight + 40])
-        combinedXBarBack();
+    translate([0, 0, secondHeight + 40])
+        combinedYBarLeft();
 }
 
 if (renderBelts)
     Belts();
 
-if (renderYAxis)
-    translate([actualcarriageXPosition + 23.5, printerSizeY / 2 - yBarLength / 2, 479]) {
+if (renderXAxis)
+    translate([printerSizeX / 2 - XBarLength / 2, actualCarriageYPosition + 24, 479]) {
         translate([0, 0, 44])
-            rotate([-90, 0, 0])
+            rotate([0, 90, 0])
                 tenMMBar(l = yBarLength);
 
-        rotate([-90, 0, 0])
+        rotate([0, 90, 0])
             tenMMBar(l = yBarLength);
     }
 
-if (renderYCarriage) {
-    translate([actualcarriageXPosition - 12, actualcarriageYPosition, secondHeight + 15]) {
-        translate([-15, -40, 35])
-            rotate([0,0,90])
-                yCarriageE3DV6Clamp();
+if (renderXCarriage) {
+    translate([actualCarriageXPosition - 12, actualCarriageYPosition + 11, secondHeight + 14]) {
+        // translate([-15, -40, 35])
+        //     rotate([0,0,90])
+        //         yCarriageE3DV6Clamp();
                 
-        rotate([0,0,-90])
+        // rotate([0,0,-90])
         {
             color(bearingColor)
             translate([5.5, 12.5, 20])
@@ -576,46 +576,47 @@ if (renderYCarriage) {
                     lmu10();
 
             color(bearingColor)
-            translate([5.5, 12.5, 60])
+            translate([5.5, 12.5, 64])
                 rotate([0, 90, 0])
                     lmu10();
 
-            color(printedColor)
-            translate([0, 5, 0])
-                yCarriageBearingClamp();
+            // color(printedColor)
+            // translate([0, 5, 0])
+            //     yCarriageBearingClamp();
 
-            translate([30,35.5,20])
-                yCarriageBearingBeltClamp();
+            // translate([30,35.5,20])
+            //     yCarriageBearingBeltClamp();
         
-            translate([0, -16, 0]) {
-                yCarriageE3DV6();
+            translate([0, -20, 0]) {
+                xCarriageE3DV6();
                 
-            if (renderE3DHotEnd) {
-                translate([20, -15, 50])
-                {
-                    rotate([0,0,-90])
-                        e3dv6();
+                if (renderE3DHotEnd) {
+                    translate([20, -15, 50])
+                    {
+                        rotate([0,0,-90])
+                            e3dv6();
 
-                    //cold end fan bracket
-                    color(purpleColor)
-                    translate([15, -15, -50])
-                        rotate([0,0,90])
-                        e3dv6Fan();
-                    
-                    //cold end fan
-                    color([.4,.4,.4])
-                    translate([25, -15, -50])
-                        rotate([0,0,90])
-                        cube([30, 10, 30]);
+                        //cold end fan bracket
+                        color(purpleColor)
+                        translate([15, -15, -50])
+                            rotate([0,0,90])
+                            e3dv6Fan();
+                        
+                        //cold end fan
+                        color([.4,.4,.4])
+                        translate([25, -15, -50])
+                            rotate([0,0,90])
+                            cube([30, 10, 30]);
 
 
+                    }
                 }
-            }}
-            //part fan
-            color([.4,.4,.4])
-            translate([5, 5, 100])
-                rotate([90, 0, 0])
-                blowerFan();
+                //part fan
+                color([.4,.4,.4])
+                translate([5, 21, 25])
+                    rotate([90, 0, 0])
+                    blowerFan();
+            }
         }
     }
 }

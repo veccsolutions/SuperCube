@@ -1,4 +1,4 @@
-module xCarriageFront() {
+module yCarriageRight() {
     
     // main block
     difference() {
@@ -26,7 +26,7 @@ module xCarriageFront() {
             cube([44.2, 5, 12]);
         
         // bottom bearing screw
-        translate([11.5, 44.125, -.1])
+        translate([12, 44.125, -.1])
             polyhole(d = 5.5, h = 15.2);
         
         // top belt cutout
@@ -38,7 +38,7 @@ module xCarriageFront() {
             cube([29, 40.2, 12]);
         
         // top bearing screw
-        translate([24.5, 32.12, 13.9])
+        translate([25, 31.12, 13.9])
             polyhole(d = 5.5, h = 16.2);
 
         // bearing clamp screw hole top left
