@@ -3,7 +3,7 @@ include <functions.scad>
 include <parts/nema17MotorPlate.scad>
 include <parts/lmu10.scad>
 
-zGantryBracketX = 20;
+zGantryBracketX = 29;
 lmu10Diameter = 20;
 lmu10Length = 29;
 yRailBracketSizeHeight = 72;

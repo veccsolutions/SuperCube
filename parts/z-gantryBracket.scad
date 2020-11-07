@@ -9,7 +9,7 @@ module zGantryBracketClampBase()
     {
         cube([zGantryBracketX, zGantryBracketBaseWidth, 20]);
 
-        translate([zGantryBracketX, zGantryBracketBaseWidth / 2, -.1])
+        translate([zGantryBracketX+.4, zGantryBracketBaseWidth / 2, -.1])
             lmu10();
 
         translate([zGantryBracketX - 8, -.1, 10 - 6/2])
@@ -30,14 +30,14 @@ module zGantryBracketClampBase()
 
 module zGantryBracketScrewBracket()
 {
-    depth = zGantryBracketX +  19 / 2;
+    depth = zGantryBracketX + 10;
 
     difference()
     {
         cube([depth,30,2]);
 
         //center
-        translate([depth / 2 + 3, depth / 2 - 5, -.1])
+        translate([depth / 2 + 3, 15, -.1])
             pomNutMount();
     }
 
