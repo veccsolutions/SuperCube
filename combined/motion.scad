@@ -15,14 +15,12 @@ module combinedYBarRight()
         rotate([0, 0, 90])
         yCarriageRight();
 
-    // TODO: Fix the YCarriage Clamp
-    // color(printedColor1)
-    // translate([printerSizeX - 10, actualCarriageYPosition + 44, 18])
-    //     rotate([0,0,-90])
-    //     xCarriageBearingClamp();
+    color(printedColor1)
+    translate([printerSizeX - 12, actualCarriageYPosition + 6, 18])
+        yCarriageBearingClamp();
 
     color(bearingColor)
-    translate([printerSizeX - 13, actualCarriageYPosition + 7.5, 38])
+    translate([printerSizeX - 13, actualCarriageYPosition + 8, 38])
         rotate([-90,0,0])
         lmu10();
 
@@ -56,11 +54,10 @@ module combinedYBarLeft()
         rotate([0, 0, -90])
             yCarriageLeft();
 
-    //TODO: fix the yCarriageBearingClamp
-    // color(printedColor1)
-    // translate([13, actualCarriageYPosition - 6.5, 18])
-    //     rotate([0, 0, 90])
-    //     xCarriageBearingClamp();
+    color(printedColor1)
+    translate([12, actualCarriageYPosition + 42, 18])
+        rotate([0, 0, -180])
+            yCarriageBearingClamp();
 
     color(bearingColor)
     translate([13, actualCarriageYPosition + 11, 38])

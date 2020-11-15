@@ -3,7 +3,7 @@ include <../parts/bedBracket.scad>
 include <../parts/e3dv6.scad>
 include <../parts/motorMounts.scad>
 include <../parts/nema17motor.scad>
-include <../parts/x-carriageBearingClamp.scad>
+include <../parts/y-carriageBearingClamp.scad>
 include <../parts/y-railBrackets.scad>
 include <../parts/y-carriageLeft.scad>
 include <../parts/y-carriageRight.scad>
